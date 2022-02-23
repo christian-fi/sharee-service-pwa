@@ -1,6 +1,7 @@
 //https://www.djamware.com/post/59924f9080aca768e4d2b12e/ionic-3-consuming-rest-api-using-new-angular-43-httpclient
 //
 declare var config_api, apiMerchant_id_conf, apiUrl_conf, apiVersion_conf;
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 

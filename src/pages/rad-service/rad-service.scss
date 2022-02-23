@@ -1,0 +1,15 @@
+page-rad-service {
+
+    .rad-0 { background-color:map-get($colors, okay); font-size: 1.6rem;} 
+    .rad-1 { background-color:map-get($colors, defect); font-size: 1.6rem;} 
+    .rad-2 { background-color:map-get($colors, todo); font-size: 1.6rem;} 
+    .rad-3 { background-color:map-get($colors, check); font-size: 1.6rem;} 
+
+    .Station-sharee { background-color: #098cdd; font-size: 1.6rem; }
+    
+    .Station-TINK { background-color: #098cdd; font-size: 1.8rem; }
+    .Station-TINK-Konrad { background-color: rgb(153, 0, 255);font-size: 1.8rem; }
+    .Station-Konrad { background-color: #f53d3d ; font-size: 1.8rem;} 
+
+    
+}

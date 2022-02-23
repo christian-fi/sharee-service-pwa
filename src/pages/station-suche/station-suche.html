@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar color="tink-blue">
+        <ion-buttons start>
+        <button ion-button icon-only>
+          <ion-icon name="search"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>
+        Station Suche
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content padding id="page8">
+    <ion-card id="stationSuche-card23">
+      <ion-list>
+        <ion-item id="stationSuche-list-item-container6">
+          <div id="stationSuche-markdown8" class="show-list-numbers-and-dots">
+            <p style="margin-top:0px;color:#000000;">
+              Stationsnummer am Schild <br>(für Werkstatt Nummer 0)
+            </p>
+          </div>
+        </ion-item>
+        <form id="stationSuche-form10">
+            <!--&nbsp;<input type="tel"  placeholder="Nummer" name="nummer"  [(ngModel)]="suchenr" id="stationSuche-search3" autofocus />-->
+            <ion-searchbar type="tel"  #inputToFocus placeholder="Nummer" name="nummer"  [(ngModel)]="suchenr" (keyup.enter)="goToStationRadliste()"></ion-searchbar>
+          </form>
+        <button  ion-button color="positive" block icon-left style="border-radius:100px 100px 100px 100px;" on-click="goToStationRadliste()">
+          <!--<ion-icon name="arrow-forward"></ion-icon>-->
+          Jetzt Suchen
+        </button>
+        <!--<br><br><br>
+        <button  ion-button color="okay" block icon-left style="border-radius:100px 100px 100px 100px;" on-click="goToRadliste()">
+            Alle Räder anzeigen
+          </button>
+          <br><br>
+        --></ion-list>
+    </ion-card>
+  </ion-content>

@@ -1,0 +1,59 @@
+<ion-header>
+    <ion-navbar color="tink-blue">
+      <ion-title *ngIf="id==restProvider.Station_Werkstatt">
+        Werkstatt 
+     </ion-title>
+      <ion-title *ngIf="id!==''">
+            Station <ion-badge [ngClass]="'Station-' + station_group" >{{nid}}</ion-badge> - Radliste
+          </ion-title>
+          <ion-title *ngIf="id==''">
+            Radliste komplett
+         </ion-title>
+    <!--<ion-buttons end>
+        <button ion-button icon-only>
+          <ion-icon name="checkmark-circle" color="secondary"></ion-icon>
+        </button>
+      </ion-buttons>-->
+    </ion-navbar>
+  </ion-header>
+  <ion-content adding id="page2">
+        <p *ngIf="id!==''" style="padding-left:10px;padding-top:0px;">
+          <!--<strong>
+            wer, wann, wievile
+          </strong>
+          Räder
+          <br /> 3 Räder, Peter, 12.12.17, 12:03, 
+          <br>-->Soll: {{soll}} &nbsp; Ist: {{ist}} <!--am 20.12.17, 12:10-->
+        </p>
+
+    <form  *ngIf="id!==''" style="margin-top:-30px;">
+          <ion-icon name="edit"></ion-icon>
+          <ion-label stacked ><ion-icon name="build" item-right *ngIf="aufgabe_api!=='::erledigt::'">&nbsp;</ion-icon>&nbsp;Aufgabe {{zuletzt_gesehen}}</ion-label>
+          <ion-textarea placeholder="was zu tun ist " type="text" [(ngModel)]="aufgabe" name="aufgaben" rows=3></ion-textarea>
+          
+          <button type=submit ion-button color="positive" icon-right on-click="saveStationService('txt01',aufgabe);" >
+              <ion-icon ame="arrow-down" ></ion-icon>Speichern
+            </button>
+            <button type=submit ion-button color="positive" on-click="saveStationService('txt01','::erledigt::');">
+              <ion-icon ame="checkmark"></ion-icon>&nbsp;erledigt
+          </button>
+     </form>
+    <ion-list >
+      <ion-item *ngFor="let item of currentItems" color="none"  class="rad-status-fehler">
+        <ion-badge color="white" on-click="goToRadService(item.bike)">
+          <ion-badge color="danger" *ngIf="item.service_state=='1'" class="tation" >&nbsp;df&nbsp;</ion-badge>
+          <ion-badge color="primary" *ngIf="item.service_state=='2'" class="tation" >&nbsp;td&nbsp;</ion-badge>
+          <ion-badge color="secondary" *ngIf="item.service_state=='3'" class="tation">&nbsp;ck&nbsp;</ion-badge>
+          <ion-badge color="light" *ngIf="item.service_state=='0'" class="tation" >&nbsp;ok&nbsp;</ion-badge>
+          <ion-badge color="white" class="tation">{{item.bike}}</ion-badge>
+          <ion-badge color="white" class="tation">{{item.description}}</ion-badge>
+          <ion-note item-right class="station">{{item.state}}</ion-note>
+      </ion-badge>
+     <!-- <ion-icon name="build" item-right *ngIf="item.service_state=='1' || item.service_state=='2' || (item.service_state=='0' && item.todo_info=='1')"></ion-icon>-->
+      <ion-icon name="build" item-right *ngIf="item.todo_info=='1'"></ion-icon>
+      <!-- *ngIf="item.service_state=='3'" -->
+        <ion-icon name="checkmark-circle"  item-right *ngIf="service_gesehen[item.bike]!='ja'" color="danger" on-click="saveRadServiceStation(item.bike,'int01',1)"></ion-icon>
+        <ion-icon name="checkmark-circle"  item-right  *ngIf="service_gesehen[item.bike]=='ja'"color="secondary" on-click="saveRadServiceStation(item.bike,'int01',1)"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-content>

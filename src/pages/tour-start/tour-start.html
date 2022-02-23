@@ -1,0 +1,107 @@
+<ion-header >
+  <ion-navbar color="tink-blue">
+    <ion-title><ion-badge *ngIf="tour_name" class="tour_name" color="{{tour_name}}">      {{tour_name}} </ion-badge> Tour
+
+    <!--<button ion-button color="danger" small round>defekt</button>-->
+  </ion-title>
+        <ion-buttons end>
+        <button ion-button icon-only on-click="goToTourStart()">All<ion-icon name="shuffle" ></ion-icon></button>
+      </ion-buttons>
+       <!-- <span radio-group>Sort by<ion-radio name="misss"></ion-radio><ion-radio name="defekt"></ion-radio></span>
+   -->
+  </ion-navbar>
+</ion-header>
+<ion-content paddin id="page4">
+
+  <ion-item style="margin-left:-10px">
+    <ion-badge class="our-name"  color="white">&nbsp;&nbsp;</ion-badge>&nbsp;&nbsp; &nbsp;&nbsp;  
+    <ion-badge class="tour-name" color="T1" on-click="goToTourStart('T1')">T1<!--<ion-icon name="move" color="white" ></ion-icon>--></ion-badge> &nbsp;&nbsp;
+    <ion-badge *ngIf="tour_nr_ja[2]=='ja'" class="tour-name" color="T2" on-click="goToTourStart('T2')">T2</ion-badge> &nbsp;&nbsp;
+    <ion-badge *ngIf="tour_nr_ja[3]=='ja'" class="tour-name" color="T3" on-click="goToTourStart('T3')">T3</ion-badge> &nbsp;&nbsp;
+    <ion-badge *ngIf="tour_nr_ja[4]=='ja'"  class="tour-name" color="T4" on-click="goToTourStart('T4')">T4 </ion-badge> &nbsp;&nbsp;
+    <ion-badge class="our-name" color="white" on-click="goToStationRadliste(restProvider.Station_Werkstatt)"><ion-icon  name="home"  >&nbsp;</ion-icon>Werkstatt</ion-badge> &nbsp;&nbsp;
+    <br>
+    <ion-badge class="tour-tst-1" color="white">ist</ion-badge> 
+    <ion-badge class="tour-tst" color="white">{{tours1['anzahl']}}</ion-badge>
+    <ion-badge *ngIf="tour_nr_ja[2]=='ja'" class="tour-tst" color="white">{{tours2['anzahl']}}</ion-badge>
+    <ion-badge *ngIf="tour_nr_ja[3]=='ja'" class="tour-tst" color="white">{{tours3['anzahl']}}</ion-badge>
+    <ion-badge *ngIf="tour_nr_ja[4]=='ja'" class="tour-tst" color="white">{{tours4['anzahl']}}</ion-badge>
+    <ion-badge class="tour-tst" color="white">&nbsp;{{tours_werkstatt['anzahl']}}</ion-badge>
+    <br>
+        <ion-badge class="tour-tst-1" color="white">soll</ion-badge> 
+        <ion-badge class="tour-tst" color="white">{{tours1['soll']}}</ion-badge>
+        <ion-badge *ngIf="tour_nr_ja[2]=='ja'" class="tour-tst" color="white">{{tours2['soll']}}</ion-badge>
+        <ion-badge *ngIf="tour_nr_ja[3]=='ja'" class="tour-tst" color="white">{{tours3['soll']}}</ion-badge>
+        <ion-badge *ngIf="tour_nr_ja[4]=='ja'" class="tour-tst" color="white">{{tours4['soll']}}</ion-badge>
+            <br>
+            <ion-badge class="tour-tst-1" color="white">fehl</ion-badge> 
+            <ion-badge class="tour-tst" color="white">{{tours1['miss']}}</ion-badge>
+            <ion-badge *ngIf="tour_nr_ja[2]=='ja'" class="tour-tst" color="white">{{tours2['miss']}}</ion-badge>
+            <ion-badge *ngIf="tour_nr_ja[3]=='ja'" class="tour-tst" color="white">{{tours3['miss']}}</ion-badge>
+            <ion-badge *ngIf="tour_nr_ja[4]=='ja'" class="tour-tst" color="white">{{tours4['miss']}}</ion-badge>
+  </ion-item>
+  <!--      <ion-item id="tourStationen-radio3">
+      <ion-label>
+        Sortierung Anzahl
+      </ion-label>
+      <ion-radio name="sort"></ion-radio>
+    </ion-item>
+    <ion-item id="tourStationen-radio4">
+      <ion-label>
+        Sortierrung defekte
+      </ion-label>
+      <ion-radio name="sort"></ion-radio>
+    </ion-item>
+  -->  <ion-item>
+        <ion-badge color="tink-blue">Station</ion-badge> 
+        <ion-badge color="dark">ist</ion-badge> 
+        <ion-badge color="light">soll</ion-badge> 
+        <ion-badge color="miss">fehl</ion-badge> &nbsp;&nbsp;
+        <ion-badge color="danger">df</ion-badge>
+        <ion-badge color="trouble">td</ion-badge>
+      <ion-badge color="secondary" on-click="loadStations()">ch</ion-badge>
+      <ion-badge color="light">ok</ion-badge>
+      </ion-item> 
+<!--   REST Api     
+      <ion-list inset  reorder="true" (ionItemReorder)="reorderItems($event)">
+          <ion-item *ngFor="let user of users">
+            <h2>{{user.name}}</h2>
+            <p>{{user.email}}</p>
+          </ion-item>
+        </ion-list> 
+      -->          
+        <ion-list id="" reorder="true" (ionItemReorder)="reorderItems($event)">
+<!--            <ion-item *ngFor="let station of (stationen | async)?.results" color="positive" on-click="goToStation12Radliste({nr:12})" id="tourStationen-list-item20"> -->
+      <ion-item *ngFor="let item of currentItems" color="positive" on-click="goToStationRadliste(item.station)" id="tourStationen-list-item20">
+                  
+      <ion-badge style="padding-left:2px;padding-right:2px; idth:60px" [ngClass]="'Station-' + item.group" >{{item.station}}</ion-badge> 
+      &nbsp; 
+      <ion-badge class="tst" color="dark">{{item.anzahl}}</ion-badge>
+      <ion-badge class="tst" color="light">{{item.soll}}</ion-badge>
+      <ion-badge class="tst" color="miss">{{item.miss}}</ion-badge>
+     &nbsp;
+      <ion-badge class="tst" color="danger" *ngIf="item.defekt>'0'">{{item.defekt}}</ion-badge>
+      <ion-badge class="tst" color="trouble" *ngIf="item.todo>'0'">{{item.todo}}</ion-badge>
+      <ion-badge class="tst" color="secondary" *ngIf="item.check>'0'">{{item.check}}</ion-badge>
+      <ion-badge class="tst" color="light" *ngIf="item.okay>'0'">{{item.okay}}</ion-badge>
+      
+      <ion-icon name="build"  *ngIf="item.todo_info=='1'">&nbsp;</ion-icon>
+      <!--
+       <p id="tourStationen-markdown10" style="margin-top:0px;color:#000000;">
+            SOLL <strong>{{item.soll}}</strong>  am <strong>{{item.soll_zeit}}</strong>
+          </p>
+        -->
+      </ion-item>
+
+    </ion-list>
+    <ion-item color="positive"  id="" >
+      <ion-label on-click="getNeueVersion()">Version {{restProvider.version_akt}} <br>--> check neueste Version <ion-icon name="arrow-dropright-circle" color="secondary"  item-right ></ion-icon> {{version}}</ion-label>
+    </ion-item>
+   
+    <ion-item color="positive"  id="" >
+      <ion-label on-click="LogOut()">zum > Benutzer-Abmelden < <br>
+      --> bitte hier klicken <ion-icon  name="checkmark-circle" color="secondary"  item-right  ></ion-icon></ion-label>
+    </ion-item>
+   
+    
+</ion-content>

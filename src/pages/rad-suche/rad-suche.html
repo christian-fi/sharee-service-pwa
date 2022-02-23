@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-navbar color="tink-blue">
+        <ion-buttons start>
+        <button ion-button icon-only>
+          <ion-icon name="search"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>
+        Rad Suche
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content padding id="page6">
+    <ion-card id="radSuche-card21">
+      <ion-list>
+        <ion-item id="radSuche-list-item-container4">
+          <div id="radSuche-markdown6" class="show-list-numbers-and-dots">
+            <p style="margin-top:0px;color:#000000;">
+              Radnummer unterhalb des Sitzes
+            </p>
+          </div>
+        </ion-item>
+        <form id="radSuche-form6">
+            <ion-searchbar type="tel" #inputToFocus placeholder="Nummer" name="nummer" [(ngModel)]="suchenr"  (keyup.enter)="goToRadServicePage()"></ion-searchbar>
+          </form>
+        <button id="radSuche-button3" ion-button color="positive" block icon-left style="border-radius:100px 100px 100px 100px;" on-click="goToRadServicePage()">
+          <!--<ion-icon name="arrow-forward"></ion-icon>-->
+          Jetzt Suchen
+        </button>
+        <br><br><br>
+        <button  ion-button color="okay" block icon-left style="border-radius:100px 100px 100px 100px;" on-click="goToRadliste()">
+            Alle Räder anzeigen
+          </button>
+          <br><br>
+         </ion-list>
+    </ion-card>
+  </ion-content>

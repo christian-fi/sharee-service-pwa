@@ -1,0 +1,13 @@
+{
+  "name": "Rad Service",
+  "short_name": "Rad Service",
+  "start_url": "index.html",
+  "display": "standalone",
+  "icons": [{
+    "src": "assets/imgs/sharee-logo.jpg",
+    "sizes": "512x512",
+    "type": "image/png"
+  }],
+  "background_color": "#4e8ef7",
+  "theme_color": "#4e8ef7"
+}

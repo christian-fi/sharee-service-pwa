@@ -1,10 +1,8 @@
-# The best Ionic Super Starter 🎮
+# sharee.bike Servicetool - rental bike service management - Ionic PWA 🎮
 
-<img src="src/assets/imgs/sharee-logo-jpg" width="400" />
+<img src="src/assets/imgs/sharee-stool.png" width="400" />
 
-The Ionic Super Starter is a batteries-included starter project for Ionic apps
-complete with pre-built pages, providers, and best practices for Ionic
-development.
+The sharee Servicetool - Ionic PWA (Progressive Web App) is a rental bike service management software tool.
 
 The goal of the Super Starter is to get you from zero to app store faster than
 before, with a set of opinions from the Ionic team around page layout,

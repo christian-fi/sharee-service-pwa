@@ -1,6 +1,6 @@
 # The best Ionic Super Starter 🎮
 
-<img src="https://github.com/christian-fi/sharee-service-pwa/src/assets/imgs/sharee-logo-jpg" width="400" />
+<img src="src/assets/imgs/sharee-logo-jpg" width="400" />
 
 The Ionic Super Starter is a batteries-included starter project for Ionic apps
 complete with pre-built pages, providers, and best practices for Ionic

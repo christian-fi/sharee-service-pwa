@@ -23,7 +23,10 @@ without duplicating code.
 2. [Git lokal](#Git-lokal)
 3. [Download from Remote Git](#Download-from-Remote-Git)
 4. [Config File](#Config-File) (for Rest API)
-4. [Start Ionic local](#Start-Ionic-local) (adding languages)
+5. [Start Ionic local](#Start-Ionic-local) 
+6. [Build Production PWA](#Build-Production-PWA) 
+7. [Hosting PWA](#Hosting-PWA) 
+ 
 
 ## Ionic-3-Framework
 
@@ -66,18 +69,19 @@ git clone https://github.com/christian-fi/sharee-servicetool.git
 ### Config File
 
 Build the Conig File (config-api.js) to connect to the Copri Rest API.<br>
-In the root dir create a new directory named 'www'. Save config-api.js in dir 'www'.
+In the root dir create a new directory named 'www'. <br>
+Save config-api.js in dir 'www'.<br>
 ...
-var config_api="OpenSource-Version"; //you can change this
+var config_api="OpenSource-Version"; //you can change this<br>
 
-var version_akt= "1-0"; //you can change this
-var version_check_conf = "NO"; //do not change this
+var version_akt= "1-0"; //you can change this<br>
+var version_check_conf = "NO"; //do not change this<br>
 
-// replace this vars with data for a sharee test account
-var shareeLive_conf="https://example1.org";  
-var apiVersion_conf = "https://example2.org";
-var apiMerchant_id_conf="12345";
-var apiUrl_conf="https://example3.org";
+// replace this vars with data for a sharee test account<br>
+var shareeLive_conf="https://example1.org";  <br>
+var apiVersion_conf = "https://example2.org";<br>
+var apiMerchant_id_conf="12345";<br>
+var apiUrl_conf="https://example3.org";<br>
 
 Contact https://sharee.bike/Kontakt to get the data for a sharee test account
 
@@ -93,19 +97,13 @@ say Y ... to creating node modules
 
 this command builds the PWA in directory 'www' and automatically opens it in your local Browser 
 
-## i18n
+## Build Production PWA 
 
-Ionic Super Starter comes with internationalization (i18n) out of the box with
-[ngx-translate](https://github.com/ngx-translate/core). This makes it easy to
-change the text used in the app by modifying only one file. 
+to Build a Production PWA for Hosting on a Live-WebServer
 
-### Adding Languages
+```bash
+npm run ionic:build -- --prod
+```
+### Hosting PWA
 
-To add new languages, add new files to the `src/assets/i18n` directory,
-following the pattern of LANGCODE.json where LANGCODE is the language/locale
-code (ex: en/gb/de/es/etc.).
-
-### Changing the Language
-
-To change the language of the app, edit `src/app/app.component.ts` and modify
-`translate.use('en')` to use the LANGCODE from `src/assets/i18n/`
+Copy the 'www' Directory with FTP as Web-Root Directory to your Web-Host.

@@ -22,8 +22,8 @@ without duplicating code.
 1. [Ionic 3 Framework](#Ionic-3-Framework)
 2. [Git lokal](#Git-lokal)
 3. [Download from Remote Git](#Download-from-Remote-Git)
-4. [Config File](#Config-File) (adding languages)
-4. [Build Config-File](#i18n) (adding languages)
+4. [Config File](#Config-File) (for Rest API)
+4. [Start Ionic local](#Start-Ionic-local) (adding languages)
 
 ## Ionic-3-Framework
 
@@ -82,10 +82,16 @@ var apiUrl_conf="https://example3.org";
 Contact https://sharee.bike/Kontakt to get the data for a sharee test account
 
 
-### Api
+### Start Ionic local
 
-The `Api` provider is a simple CRUD frontend to an API. Simply put the root of
-your API url in the Api class and call get/post/put/patch/delete 
+Start build the Ionic App from the Sources an a lokal WebServer
+
+```bash
+ionic serve
+```
+say Y ... to creating node modules
+
+this command builds the PWA in directory 'www' and automatically opens it in your local Browser 
 
 ## i18n
 

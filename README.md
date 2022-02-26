@@ -1,75 +1,88 @@
-# sharee.bike Servicetool - rental bike service management - Ionic PWA 🎮
+# sharee.bike Servicetool - rental bike service management 🎮
 
 <img src="src/assets/imgs/sharee-stool.png" width="400" />
 
-The sharee Servicetool - Ionic PWA (Progressive Web App) is a rental bike service management software tool.
+The sharee Servicetool - is a rental bike service management software:
+It is build with the Ionic 3 Framework as PWA (Progressive Web App).
 
-The goal of the Super Starter is to get you from zero to app store faster than
-before, with a set of opinions from the Ionic team around page layout,
-data/user management, and project structure.
+This PWA connects via REST API to the main System - the COPRI Database 
+https://gitlab.com/t6353/sharee.bike
 
-The way to use this starter is to pick and choose the various page types you
-want use, and remove the ones you don't. If you want a blank slate, this
-starter isn't for you (use the `blank` type instead).
+Running as a PWA it is installed on a normal Webserver. You can use and acees it by any Webclient wether a Smarthone or Desktop Cleint or Tablet. For this App there is no need to load it from Google or Apple Store.
 
-One of the big advances in Ionic was moving from a rigid route-based navigation
-system to a flexible push/pop navigation system modeled off common native SDKs.
-We've embraced this pattern to provide a set of reusable pages that can be
-navigated to anywhere in the app. Take a look at the [Settings
+User Manual 
+
+Take a look at the [Settings
 page](https://github.com/ionic-team/starters/blob/master/ionic-angular/official/super/src/pages/settings/settings.html)
 for a cool example of a page navigating to itself to provide a different UI
 without duplicating code.
 
-## Table of Contents
+## Installation Guide - Table of Contents
 
-1. [Getting Started](#getting-started)
-2. [Pages](#pages)
-3. [Providers](#providers)
-4. [i18n](#i18n) (adding languages)
+1. [Ionic 3 Framework](#Ionic-3-Framework)
+2. [Git lokal](#Git-lokal)
+3. [Download from Remote Git](#Download-from-Remote-Git)
+4. [Config File](#Config-File) (adding languages)
+4. [Build Config-File](#i18n) (adding languages)
 
-## <a name="getting-started"></a>Getting Started
+## Ionic-3-Framework
 
-To test this starter out, install the latest version of the Ionic CLI and run:
+Installation on Windows System
 
+1. Install NodeJS  Version 8.9.1 
+https://nodejs.org/download/release/v8.9.1/
+
+2. Use the Node.js command promt to run the scripts:
 ```bash
-ionic start mySuperApp super
+npm -v
 ```
+> npm -v
+--> 5.5.1
+npm install -g cordova@7.1.0
+cordova -v
+--> 7.1.0
+npm install -g ionic@3.20.0
+ionic -v   
+--> 3.20.0
 
-## Pages
 
-The Super Starter comes with a variety of ready-made pages. These pages help
-you assemble common building blocks for your app so you can focus on your
-unique features and branding.
+more documentation about Ionic 3:
+https://ionicframework.com/docs/v3/
 
-The app loads with the `FirstRunPage` set to `TutorialPage` as the default. If
-the user has already gone through this page once, it will be skipped the next
-time they load the app.
+## Git lokal
 
-If the tutorial is skipped but the user hasn't logged in yet, the Welcome page
-will be displayed which is a "splash" prompting the user to log in or create an
-account.
-
-Once the user is authenticated, the app will load with the `MainPage` which is
-set to be the `TabsPage` as the default.
-
-The entry and main pages can be configured easily by updating the corresponding
-variables in
-[src/pages/pages.ts](https://github.com/ionic-team/starters/blob/master/ionic-angular/official/super/src/pages/pages.ts).
+make sure your lokal Git System ist installed.
 
 Please read the
 [Pages](https://github.com/ionic-team/starters/tree/master/ionic-angular/official/super/src/pages)
 readme, and the readme for each page in the source for more documentation on
 each.
 
-## Providers
+## Download from Remote Git
 
-The Super Starter comes with some basic implementations of common providers.
+Go to the directory you want to be the root directory and run the command:
+```bash
+git clone https://github.com/christian-fi/sharee-servicetool.git
+```
 
-### User
+### Config File
 
-The `User` provider is used to authenticate users through its
-`login(accountInfo)` and `signup(accountInfo)` methods, which perform `POST`
-requests to an API endpoint that you will need to configure.
+Build the Conig File (config-api.js) to connect to the Copri Rest API.
+In the root dir create a new directory named www. Save config-api.js in dir www.
+...
+var config_api="OpenSource-Version"; //you can change this
+
+var version_akt= "1-0"; //you can change this
+var version_check_conf = "NO"; //do not change this
+
+// replace this vars with data for a sharee test account
+var shareeLive_conf="https://example1.org";  
+var apiVersion_conf = "https://example2.org";
+var apiMerchant_id_conf="12345";
+var apiUrl_conf="https://example3.org";
+
+Contact https://sharee.bike/Kontakt to get the data for a sharee test account
+
 
 ### Api
 

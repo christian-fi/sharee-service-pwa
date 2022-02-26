@@ -8,7 +8,7 @@ It is build with the Ionic 3 Framework as PWA (Progressive Web App).
 This PWA connects via REST API to the main System - the COPRI Database 
 https://gitlab.com/t6353/sharee.bike
 
-Running as a PWA it is installed on a normal Webserver. You can use and acees it by any Webclient wether a Smarthone or Desktop Cleint or Tablet. For this App there is no need to load it from Google or Apple Store.
+Running as a PWA it is installed on a normal Webserver. You can use and acees it by any Webclient whether a Smarthone, Tablet or Desktop Clientt. For this App there is no need to load it from Google or Apple Store.
 
 User Manual 
 
@@ -36,13 +36,16 @@ https://nodejs.org/download/release/v8.9.1/
 ```bash
 npm -v
 ```
-> npm -v
 --> 5.5.1
+```bash
 npm install -g cordova@7.1.0
 cordova -v
+```
 --> 7.1.0
+```bash
 npm install -g ionic@3.20.0
 ionic -v   
+```
 --> 3.20.0
 
 
@@ -53,11 +56,6 @@ https://ionicframework.com/docs/v3/
 
 make sure your lokal Git System ist installed.
 
-Please read the
-[Pages](https://github.com/ionic-team/starters/tree/master/ionic-angular/official/super/src/pages)
-readme, and the readme for each page in the source for more documentation on
-each.
-
 ## Download from Remote Git
 
 Go to the directory you want to be the root directory and run the command:
@@ -67,8 +65,8 @@ git clone https://github.com/christian-fi/sharee-servicetool.git
 
 ### Config File
 
-Build the Conig File (config-api.js) to connect to the Copri Rest API.
-In the root dir create a new directory named www. Save config-api.js in dir www.
+Build the Conig File (config-api.js) to connect to the Copri Rest API.<br>
+In the root dir create a new directory named 'www'. Save config-api.js in dir 'www'.
 ...
 var config_api="OpenSource-Version"; //you can change this
 

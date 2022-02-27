@@ -10,7 +10,7 @@ https://gitlab.com/t6353/sharee.bike
 
 Running as a PWA it is installed on a normal Webserver. This way you can use it by Smartphone, Tablet or Laptopb/Desktop Client. For this App there is no need to load it from Google or Apple Store.
 
-See the <a href="src/sharee-Servicetool-Handbuch.pdf" target=_blank/>User Manual</a>:  
+See the <a href="sharee-Servicetool-Handbuch.pdf" target=_blank/>User Manual</a>:  
 
 ## Installation Guide - Development Platform
 

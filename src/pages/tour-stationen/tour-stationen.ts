@@ -149,8 +149,8 @@ ri=ri+1;
             return comparison;
           }
      
-    //      this.currentItems=this.stations_out;
-          this.currentItems=this.stations_out.sort(itc_sort_miss);
+          this.currentItems=this.stations_out;  // no sorting
+    //      this.currentItems=this.stations_out.sort(itc_sort_miss);
           this.raederItems=result_raeder;
 //            this.currentItems=result_raeder;
 //            this.restProvider.console_itc( this.raederItems);            

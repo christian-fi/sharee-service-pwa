@@ -1,4 +1,4 @@
-# sharee.bike Servicetool - rental bike service management 🎮
+# sharee.bike Servicetool - rental bike service management
 
 <img src="src/assets/imgs/sharee-stool.png" width="400" />
 
@@ -8,16 +8,11 @@ It is build with the Ionic 3 Framework as PWA (Progressive Web App).
 This PWA connects via REST API to the main System - the COPRI Database 
 https://gitlab.com/t6353/sharee.bike
 
-Running as a PWA it is installed on a normal Webserver. You can use and acees it by any Webclient whether a Smarthone, Tablet or Desktop Clientt. For this App there is no need to load it from Google or Apple Store.
+Running as a PWA it is installed on a normal Webserver. This way you can use it by Smartphone, Tablet or Laptopb/Desktop Client. For this App there is no need to load it from Google or Apple Store.
 
-User Manual 
+See the <a href="src/sharee-Servicetool-Handbuch.pdf" target=_blank/>User Manual</a>:  
 
-Take a look at the [Settings
-page](https://github.com/ionic-team/starters/blob/master/ionic-angular/official/super/src/pages/settings/settings.html)
-for a cool example of a page navigating to itself to provide a different UI
-without duplicating code.
-
-## Installation Guide - Table of Contents
+## Installation Guide - Development Platform
 
 1. [Ionic 3 Framework](#Ionic-3-Framework)
 2. [Git lokal](#Git-lokal)
@@ -28,12 +23,12 @@ without duplicating code.
 7. [Hosting PWA](#Hosting-PWA) 
  
 
-## Ionic-3-Framework
-
-Installation on Windows System
+## Ionic 3 Framework
 
 1. Install NodeJS  Version 8.9.1 
 https://nodejs.org/download/release/v8.9.1/
+
+Installation as exactly on a Windows System. For Unix is very similar.
 
 2. Use the Node.js command promt to run the scripts:
 ```bash

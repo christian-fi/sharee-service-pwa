@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-//import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { RestProvider } from '../../providers/rest/rest';
-
-//import { MainPage } from '../pages';
 
 
 @IonicPage()
@@ -14,24 +11,17 @@ import { RestProvider } from '../../providers/rest/rest';
 })
 export class LoginPage {
   // The account fields for the login form.
-  // If you're using the username field with or without email, make
-  // sure to add it to the type
   account: { email: string, password: string } = {
-    email:'', // 'cfischer@itcreation.de',
-    password: '' //'15ba9f99b382' live server
+    email:'', 
+    password: ''  
   };
 
-  // Our translated text strings
   private loginErrorString: string;
 
   constructor(public navCtrl: NavController,public navParams: NavParams,
     public restProvider: RestProvider,
-    public toastCtrl: ToastController/*,
-  public translateService: TranslateService*/) {
+    public toastCtrl: ToastController ) {
     this.loginErrorString='Fehler ! Bitte überprüfen Sie ihre Eingaben und versuchen es erneut.';
-    /*this.translateService.get('LOGIN_ERROR').subscribe((value) => {
-      this.loginErrorString = value;
-    })*/
   }
  
   doTinkLogin(id:string) {

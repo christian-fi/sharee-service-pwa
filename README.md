@@ -88,6 +88,8 @@ Start build the Ionic App from the Sources an a lokal WebServer
 ```bash
 ionic serve
 ```
+important: say No ... to updating CLI
+--> we have to use ionic CLI older version, do not update
 say Y ... to creating node modules
 
 this command builds the PWA in directory 'www' and automatically opens it in your local Browser 

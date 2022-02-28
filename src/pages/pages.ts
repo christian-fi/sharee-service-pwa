@@ -7,7 +7,6 @@ export const MainPage = 'TabsPage';
 
 // The initial root pages for our tabs (remove if not using tabs)
 export const Tab1Root = 'TourStartPage';
-//export const Tab1Root = 'TourStationenPage';
 export const Tab2Root = 'StationSuchePage'; 
 export const Tab3Root = 'RadSuchePage';  
 export const Tab4Root = 'RadSuchePage'; 

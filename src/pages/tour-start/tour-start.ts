@@ -5,13 +5,8 @@ import { IonicPage, NavController, NavParams, reorderArray } from 'ionic-angular
 
 //import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-//import { CopriApiProvider } from '../../providers/copri-api/copri-api';
 // import for REST provider
 import { RestProvider } from '../../providers/rest/rest';
-
-// for mock data
-//import { Item } from '../../models/item';
-//import { Items } from '../../providers/providers';
 
 
 @IonicPage()
@@ -325,70 +320,6 @@ goToStationRadliste(id: string){
     }      
     
     
-//      reorderItems(indexes) {
-//      this.users = reorderArray(this.users, indexes);
-//    }
-  //-----------------------
-  
-/*
-  currentItems: Item[];
-
-  constructor(public navCtrl: NavController, public items: Items) {
-  }
-
-  reorderItems(indexes) {
-    this.currentItems = reorderArray(this.currentItems, indexes);
-  }
-  
-  ionViewDidLoad() {
-    this.restProvider.console_itc('ionViewDidLoad Mockdata tour_stationenPage');
-    this.currentItems = this.items.query().sort();
-  }
-*/
-
-
-
- /*
-  // rest provider
-  users: any;
-  getItems() {
-    this.restProvider.getUsers()
-    .then(data => {
-      this.users = data;
-      this.restProvider.console_itc(this.users);
-    });
-  }
-  constructor(public navCtrl: NavController, public restProvider: RestProvider) {
-  }
-  reorderItems(indexes) {
-    this.users = reorderArray(this.users, indexes);
-  }
-  ionViewDidLoad() {
-    this.restProvider.console_itc('ionViewDidLoad tour_stationenPage');
-    this.getItems();
-  }
-//-----------------------
-*/
-
- 
-  
-  
-  /*
-  stationen: Observable <any>;
-  title: String;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public copriAPI: CopriApiProvider) {
-     this.stationen = copriAPI.getStationen();
-
-    //this.title = 'test'; //this.stationen['Search'][0]['Title'];
-      //this.restProvider.console_itc(this.title);
-      
-      //  this.stationen = Array.of(this.copriAPI.getStationen());
-      
-    //this.stationen=Array.of(this.stationen_o);
-    //this.stationen =this.stat[0][0];
-    }
-*/
-  
 
   
 

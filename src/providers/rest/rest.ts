@@ -386,39 +386,4 @@ getShareeVersion() {
   );
   });
 }
-/*
-  getRaeder(id:string) {
-    return new Promise(resolve => {
-      //this.loading.present();
-      this.http.get(this.apiUrlRaeder).subscribe(data => {        
-        //        this.http.get(this.url).subscribe(data => {
-//        resolve(data['Search']);
-        this.auth_okay(data['shareejson']['authcookie']); 
-        resolve(data);
-          }, err => {        this.console_itc(err);      }
-      //,
-    //  ()=> {
-    //    this.loading.dismiss();
-    //    this.console_itc('copi raeder geladen');
-    //  }
-    );
-    });
-  }
-
-  getItcStationen() {    return new Promise(resolve => { 
-          //this.loading.present();
-          this.http.get(this.apiUrlStationen)
-          .subscribe(data => {
-    //      resolve(data['shareejson']['bikes']);
-        resolve(data);
-        }, err => {                this.console_itc(err);             },
-            ()=> {
-              this.loading.dismiss();
-              this.console_itc('itc stationen geladen');
-            }
-            );
-            });
-  }
-        
- */       
 }

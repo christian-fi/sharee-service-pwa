@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angul
 
 import { RestProvider } from '../../providers/rest/rest';
 
-
 @IonicPage()
 @Component({
   selector: 'page-rad-service',

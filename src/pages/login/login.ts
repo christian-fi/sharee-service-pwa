@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 //import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
-import { User } from '../../providers/providers';
 import { RestProvider } from '../../providers/rest/rest';
 
-import { MainPage } from '../pages';
+//import { MainPage } from '../pages';
+
 
 @IonicPage()
 @Component({
@@ -26,7 +26,6 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController,public navParams: NavParams,
     public restProvider: RestProvider,
-    public user: User,
     public toastCtrl: ToastController/*,
   public translateService: TranslateService*/) {
     this.loginErrorString='Fehler ! Bitte überprüfen Sie ihre Eingaben und versuchen es erneut.';
@@ -63,21 +62,5 @@ export class LoginPage {
     });
     }
   
-  // Attempt to login in through our User service
-  doLogin() {
-    this.user.login(this.account.email,).subscribe((resp) => {
-      this.navCtrl.push(MainPage);
-    }, (err) => {
-      this.navCtrl.push(MainPage);
-      // Unable to log in
-      let toast = this.toastCtrl.create({
-        message: this.loginErrorString,
-        duration: 6000,
-        position: 'top'
-      });
-      toast.present();
-    });
-  }
-
 
 }

@@ -3,8 +3,8 @@
   "app_id": "",
   "type": "ionic-angular",
   "proxies" :[{ 
-    "path":"*/APIjsonserver?request=", 
-    "proxyUrl":"https://tinkwwp.copri-bike.de/APIjsonserver?request="
+    "path":"", 
+    "proxyUrl":""
     }],
   "integrations": {}
 }

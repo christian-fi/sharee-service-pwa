@@ -1,5 +1,3 @@
-//https://www.djamware.com/post/59924f9080aca768e4d2b12e/ionic-3-consuming-rest-api-using-new-angular-43-httpclient
-//
 declare var config_api, apiMerchant_id_conf, apiUrl_conf, apiVersion_conf;
 
 import { HttpClient } from '@angular/common/http';
@@ -8,9 +6,6 @@ import { Injectable } from '@angular/core';
 import { LoadingController } from 'ionic-angular';
 
 import { ToastController } from 'ionic-angular';
-//import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-//import { MainPage } from '../../pages/pages';
-//import * as moment from 'moment';
 import {App} from "ionic-angular";
 
 @Injectable() 
@@ -19,14 +14,10 @@ export class RestProvider {
   apiMerchant_id=apiMerchant_id_conf;
   apiURL=apiUrl_conf;
   
-  // test cookie cf 6168_84f63290a653c479dfa032c72d0fe1fe_34567890
-  // live cookie cf 6168_84f63290a653c479dfa032c72d0fe1fe_cleeJet3
   authcookie:string =window.localStorage.getItem('authcookie'); 
-  authcookie_leer='notused'; //set '' to make it happen //'21254_84f63290a653c479dfa032c72d0fe1fe_ceefei9Eix'; 
+  authcookie_leer='notused'; //set '' to make it happen  
   apiUrlOperator:string=window.localStorage.getItem('uri_operator')+'/APIjsonserver?request=';
   
-  //authcookie:string ='6103_f782a208d9399291ba8d086b5dcc2509_23456789';
-
   BikesALL="bikes_all&authcookie=";   
   BikesALL_StationNR="bikes_all&station=";  
   BikesALL_BikeNR="bikes_all&bike=";  
@@ -47,7 +38,7 @@ export class RestProvider {
   
   loading: any;
   
-  constructor(//public navCtrl: NavController,public navParams: NavParams,
+  constructor(
     public app: App,
     public http: HttpClient,public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
     this.loading = this.loadingCtrl.create({
@@ -373,8 +364,6 @@ getShareeVersion() {
   return new Promise(resolve => {
     //this.loading.present();
     this.http.get(apiVersion_conf).subscribe(data => {        
-      //        this.http.get(this.url).subscribe(data => {
-//        resolve(data['Search']);
         resolve(data);
         this.console_itc('neueste sharee version: '+data['version']+' aktuell API: '+config_api); //+'-'+data['os']
       }, err => {        this.console_itc(err);      }
@@ -387,3 +376,5 @@ getShareeVersion() {
   });
 }
 }
+// tutorial
+// https://www.djamware.com/post/59924f9080aca768e4d2b12e/ionic-3-consuming-rest-api-using-new-angular-43-httpclient

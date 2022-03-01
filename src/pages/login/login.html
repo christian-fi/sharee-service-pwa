@@ -1,28 +1,21 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later
+ Copyright (c) Christian Fischer, TeilRad GmbH  -->
 <ion-header>
-
   <ion-navbar color="tink-blue">
     <ion-title >Login - sharee Service TOOL </ion-title>
   </ion-navbar>
-
 </ion-header>
-
-
 <ion-content>
-  
   <form (submit)="doTinkLogin()">
     <ion-list>
-
       <ion-item>
         <ion-label fixed>Email</ion-label>
         <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
       </ion-item>
-
-     
       <ion-item>
         <ion-label fixed>Passwort</ion-label>
         <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
       </ion-item>
-
       <div padding>
         <button ion-button color="primary" block>Login</button>
       </div>

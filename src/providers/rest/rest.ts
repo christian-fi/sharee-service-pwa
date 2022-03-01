@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (c) Christian Fischer, TeilRad GmbH
+//
 declare var config_api, apiMerchant_id_conf, apiUrl_conf, apiVersion_conf;
 
 import { HttpClient } from '@angular/common/http';

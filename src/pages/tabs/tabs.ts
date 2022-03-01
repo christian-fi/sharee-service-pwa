@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (c) Christian Fischer, TeilRad GmbH
+//
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 

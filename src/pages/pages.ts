@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (c) Christian Fischer, TeilRad GmbH
+//
 // The page the user lands on after opening the app and without a session
 export const FirstRunPage = 'TabsPage';  //'LoginPage'; //'TabsPage'; //'TutorialPage';
 

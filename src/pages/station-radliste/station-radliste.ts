@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (c) Christian Fischer, TeilRad GmbH
+//
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController  } from 'ionic-angular';
 
@@ -26,17 +29,6 @@ export class StationRadlistePage {
     public toastCtrl: ToastController) {
   }
 
-  /* getItems() {
-    //this.restProvider.getTinkRaeder(this.id)
-    this.restProvider.getRaeder(this.id)
-    .then(data => {
-      this.currentItems = data;
-      this.restProvider.console_itc(this.currentItems);
-      this.restProvider.console_itc("werst-nr:"+this.restProvider.Station_Werkstatt);
-    });
-  }
-  */
-  
   getTinkItems(id:string) {
     this.restProvider.console_itc("werst-nr:"+this.restProvider.Station_Werkstatt);
     this.restProvider.getTinkRaederStation(id,this.navParams.get('ac'))
@@ -50,24 +42,7 @@ export class StationRadlistePage {
           //  this.restProvider.console_itc( key, Array.of(data[key]));
         }
       } 
-      /*
-      for (var key1 in result) {
-        //    result[key].push(data[key]);          
-        this.restProvider.getTinkRaederTemplate(result[key1]['bike'])          
-        .then(data2 => {
-          var template =[];
-          for (var key2 in data2) {
-            // check if the property/key is defined in the object itself, not in parent
-            if (data2.hasOwnProperty(key2)) {
-                template.push(data2[key2]);            
-                this.restProvider.console_itc( result[key1]['bike']+'key2:'+key2, Array.of(data2[key2]));
-            }
-          } 
-          this.restProvider.console_itc(  'txt01: '+template[0]['txt01']);  
-        });        
-        this.restProvider.console_itc(  result[key1]['bike']);
-      } 
-*/
+ 
 function itc_sort_bike(b,a){
   let comparison = 0;
   if (a['bike'] <= b['bike']) { comparison = 1;}  else { comparison=-1;   }
@@ -202,10 +177,5 @@ function itc_sort_bike(b,a){
       //this.restProvider.console_itc( this.currentItems);
       });
   }
-
-  
-
-
-
 
 }

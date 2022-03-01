@@ -1,9 +1,12 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (c) Christian Fischer, TeilRad GmbH
+//
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Camera } from '@ionic-native/camera';
-import { SplashScreen } from '@ionic-native/splash-screen';
+//import { Camera } from '@ionic-native/camera';
+//import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -41,8 +44,8 @@ import { RestProvider } from '../providers/rest/rest';
     MyApp
   ],
   providers: [
-    Camera,
-    SplashScreen,
+   // Camera,
+   // SplashScreen,
     StatusBar,
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },

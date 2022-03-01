@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (c) Christian Fischer, TeilRad GmbH
+//
 declare var version_akt, shareeLive_conf, version_check_conf;
 
 import { Component } from '@angular/core';

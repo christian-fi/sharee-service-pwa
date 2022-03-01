@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (c) Christian Fischer, TeilRad GmbH
+//
 // idea from: https://julienrenaux.fr/2017/07/20/optimized-ionic-angular-css-bundle-for-pwas/
 
 // https://www.npmjs.com/package/node-sass

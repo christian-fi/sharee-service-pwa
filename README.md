@@ -4,6 +4,7 @@
 
 The sharee Servicetool - is a rental bike service management software:
 It is build with the Ionic 3 Framework as PWA (Progressive Web App).
+Coding is in Angular JS.
 
 This PWA connects via REST API to the main System - the COPRI Database 
 https://gitlab.com/t6353/sharee.bike

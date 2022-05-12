@@ -28,7 +28,7 @@ export class LoginPage {
   }
  
   doTinkLogin(id:string) {
-    this.restProvider.doTinkAuth(this.account.email,this.account.password)
+    this.restProvider.doTinkAuth(encodeURIComponent(this.account.email),encodeURIComponent(this.account.password))
     .then(data => { 
       var result =[];
       for (var key in data) {

@@ -29,6 +29,7 @@ export class TourStartPage {
     tours_werkstatt=[];
    stations_out = []; 
    version: string;
+   version_akt_show=version_akt;
    tour_name:string;
 
    
@@ -240,7 +241,7 @@ let ri=0; // items array leer dann fehler, daher erstmal nur 13 ausgeben
             return comparison;
           } 
      
-    this.currentItems=this.stations_out; // sorting stop - this.stations_out.sort(itc_sort_station);
+    this.currentItems=this.stations_out.sort(itc_sort_station);
     this.raederItems=result_raeder;
 //            this.currentItems=result_raeder;
 //            this.restProvider.console_itc( this.raederItems);            
@@ -271,7 +272,7 @@ let ri=0; // items array leer dann fehler, daher erstmal nur 13 ausgeben
       this.restProvider.getShareeVersion()
       .then(data => {
         this.version = data['version']; //neuste Version
-        
+      
         this.restProvider.console_itc('version_akt='+version_akt);
         this.restProvider.console_itc('this.version='+this.version);
         function wait_ms(ms) {

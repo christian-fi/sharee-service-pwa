@@ -18,7 +18,7 @@ export class RestProvider {
   apiURL=apiUrl_conf;
   
   authcookie:string =window.localStorage.getItem('authcookie'); 
-  authcookie_leer='notused'; //set '' to make it happen  
+  authcookie_leer=''; //set '' to make it happen  
   apiUrlOperator:string=window.localStorage.getItem('uri_operator')+'/APIjsonserver?request=';
   
   BikesALL="bikes_all&authcookie=";   

@@ -49,7 +49,7 @@
           <ion-badge color="light" *ngIf="item.service_state=='0'" class="tation" >&nbsp;ok&nbsp;</ion-badge>
           <ion-badge color="white" class="tation">{{item.bike}}</ion-badge>
           <ion-badge color="white" class="tation">{{item.description}}</ion-badge>
-          <ion-note item-right class="station">{{item.state}}</ion-note>
+          <ion-note item-right class="note-md-dark">{{item.state}}</ion-note>
       </ion-badge>
      <!-- <ion-icon name="build" item-right *ngIf="item.service_state=='1' || item.service_state=='2' || (item.service_state=='0' && item.todo_info=='1')"></ion-icon>-->
       <ion-icon name="build" item-right *ngIf="item.todo_info=='1'"></ion-icon>

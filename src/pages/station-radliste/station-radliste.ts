@@ -38,7 +38,8 @@ export class StationRadlistePage {
       for (var key in data) {
         // check if the property/key is defined in the object itself, not in parent
         if (data.hasOwnProperty(key)) {
-            if (data[key]['state'] !=='occupied')  result.push(data[key]);            
+          //if (data[key]['state'] !=='occupied')  result.push(data[key]);            
+          result.push(data[key]);            
           //  this.restProvider.console_itc( key, Array.of(data[key]));
         }
       } 

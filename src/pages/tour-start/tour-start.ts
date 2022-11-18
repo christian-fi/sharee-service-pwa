@@ -309,14 +309,14 @@ goToStationRadliste(id: string){
     reorderItems(indexes) {
       this.currentItems = reorderArray(this.currentItems, indexes);
     }
-
+/*
     getNeueVersion() {  
       this.restProvider.getShareeVersion()
         .then(data => {
           this.version = data['version'];
         });
     }      
-
+*/
     LogOut() {  
       window.localStorage.setItem('authcookie','');
       this.navCtrl.push('LoginPage');

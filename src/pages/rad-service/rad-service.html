@@ -40,23 +40,37 @@
   <ion-content >
 
       <p style="padding-left:10px;padding-right:5px;padding-top:0px;">
-          <strong><span *ngIf="service_state=='1' && bike_station ==restProvider.Station_Werkstatt">Werkstatt - </span>Station {{bike_station}} - zuletzt gesehen - am . von . Service</strong><br>
+          <strong><span *ngIf="service_state=='1' && bike_station ==restProvider.Station_Werkstatt">Werkstatt - </span>Station {{bike_station}} - zuletzt gesehen: {{zuletzt_gesehen_am}}</strong><br>
           <span style="white-space: pre;">{{zuletzt_gesehen}}</span>
           <br />   
         </p>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="tel" size="3" #inputToFocus placeholder="Nr" name="station-id"  [(ngModel)]="new_station_id" (keyup.enter)="saveRadStation();"><!--></ion-searchbar>-->
-        <button type=submit ion-button size="small" color="positive" on-click="saveRadStation();">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="margin-top:6px" type="tel" size="3" #inputToFocus placeholder="Nr" name="station-id"  [(ngModel)]="new_station_id" (keyup.enter)="saveRadStation();"><!--></ion-searchbar>-->
+        <button class="button-small-md" type=submit ion-button  color="positive" on-click="saveRadStation();">
           GO-Station
-      </button>
-      <form style="margin-top:-30px;">
-          <ion-icon name="edit"></ion-icon>
+        </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!--<button class="button-small-md" type=submit ion-button  color="miss" on-click="saveAkkuOkay();">
+          Akku Lock
+        </button>
+        <button class="button-small-md" type=submit ion-button  color="miss" on-click="saveAkkuOkay();">
+          Akku Bike
+        </button>-->
+      <form tyle="margin-top:-30px;">
           
-          <ion-label stacked ><ion-icon name="build" item-right *ngIf="todo_info=='1'">&nbsp;</ion-icon>Aufgabe</ion-label>
-        <ion-textarea placeholder="hier eingeben was zu tun ist " type="text" [(ngModel)]="aufgabe" name="aufgaben" rows=3></ion-textarea>
-        <button type=submit ion-button color="positive" icon-right on-click="saveRadService('txt01',aufgabe,'aufgabe');" >
+          <ion-label stacked >&nbsp;&nbsp;&nbsp;<ion-icon name="build" item-right *ngIf="todo_info=='1'">&nbsp;</ion-icon>Aufgabe
+            <!--<ion-icon name="checkmark-circle" color="danger"  item-right  ></ion-icon>-->
+          </ion-label>  
+            
+          <ion-item>
+            <ion-textarea placeholder="hier eingeben was zu tun ist " type="text" [(ngModel)]="aufgabe" name="aufgaben" rows=2></ion-textarea>
+            <!--
+            <ion-icon name="checkmark-circle" color="danger"  item-right  on-click="saveRadAufgabe()"></ion-icon>
+            <ion-icon name="checkmark-circle" color="secondary"  item-right on-click="saveRadAufgabe()"></ion-icon>
+            -->
+          </ion-item>
+          <button class="button-small-md" type=submit ion-button color="positive" icon-right on-click="saveRadService('txt01',aufgabe,'aufgabe');" >
           <ion-icon ame="arrow-down" ></ion-icon>Speichern
         </button>
-        <button type=submit ion-button color="positive" on-click="saveRadService('txt01','::erledigt::',sid_erledigt);">
+        <button class="button-small-md" type=submit ion-button color="positive" on-click="saveRadService('txt01','::erledigt::',sid_erledigt);">
           <ion-icon ame="checkmark"></ion-icon>&nbsp;erledigt
       </button>
       

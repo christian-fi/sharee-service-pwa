@@ -81,10 +81,8 @@ function itc_sort_bike(b,a){
           if( this.aufgabe=='::erledigt::') this.aufgabe='';
           //new 13.23.21 - not needed
           //if( this.aufgabe=='NaN') this.aufgabe='';     
-          else this.zuletzt_gesehen=' - von '+result[key]['user_name']+'.'+result[key]['mtime'].substr(0,16); //+'.'+result[key]['work_name'];
-          
+          else this.zuletzt_gesehen=' - von: '+result[key]['user_name']+' am: '+result[key]['mtime'].substr(8,2)+'.'+result[key]['mtime'].substr(5,2)+'.'+result[key]['mtime'].substr(2,2)+' '+result[key]['mtime'].substr(11,5); 
           result.splice(ri,1);
-
         }
         ri=ri+1; 
       }

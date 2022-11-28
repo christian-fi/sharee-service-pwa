@@ -18,6 +18,7 @@ export class RadServicePage {
   aufgabe: string;
   sid_erledigt: string;
   aufgabe_api: string;
+  zuletzt_gesehen_am: string; 
   zuletzt_gesehen: string;
   zuletzt_gesehenLog: string;
   service_state:string;
@@ -93,7 +94,8 @@ export class RadServicePage {
       
     if (result.length >0) {  // kein service daten ergebnis ?
       result.sort(itc_sort_zuletzt);
-      this.zuletzt_gesehen=result[0]['mtime'].substr(8,2)+'.'+result[0]['mtime'].substr(5,2)+'.'+result[0]['mtime'].substr(2,2)+' '+result[0]['mtime'].substr(11,5)+' '+result[0]['user_name']+' '; //+result[0]['work_name'];
+      this.zuletzt_gesehen_am=result[0]['mtime'].substr(8,2)+'.'+result[0]['mtime'].substr(5,2)+'.'+result[0]['mtime'].substr(2,2)+' '+result[0]['mtime'].substr(11,5);
+      this.zuletzt_gesehen='von: '+result[0]['user_name']+' - letzter Service:'; //+result[0]['work_name'];
       
         let ra=0; let sp=' '; 
         for (var key in result) {
@@ -233,22 +235,27 @@ export class RadServicePage {
       if (index!=='' ) {
         if (index=='def') {
           this.service_state='1';
-          this.zuletzt_gesehen='Rad defekt \n'+this.zuletzt_gesehen;
+          this.restProvider.ShowMessage('Rad defekt !');
+          //this.zuletzt_gesehen='Rad defekt \n'+this.zuletzt_gesehen;
         } else if (index=='available') {
           this.service_state='0';
-          this.zuletzt_gesehen='Rad available \n'+this.zuletzt_gesehen;
+          this.restProvider.ShowMessage('Rad available !');
+          //this.zuletzt_gesehen='Rad available \n'+this.zuletzt_gesehen;
         } else if (index=='aufgabe') {
           this.todo_info='1';
-          this.zuletzt_gesehen='Aufgabe gespeichert \n'+this.zuletzt_gesehen;
+          this.restProvider.ShowMessage('Aufgabe gespeichert !');
+          //this.zuletzt_gesehen='Aufgabe gespeichert \n'+this.zuletzt_gesehen;
           this.aufgabe_api=this.aufgabe;
         //} else if (index=='erledigt') {
         } else if (work_val.toString().substring(0,12)=='::erledigt::') {
           this.todo_info='0';
           this.aufgabe='';this.aufgabe_api='::erledigt::';
-          this.zuletzt_gesehen='Aufgabe erledigt \n'+this.zuletzt_gesehen;
+          this.restProvider.ShowMessage('Aufgabe erledigt !');
+          //this.zuletzt_gesehen='Aufgabe erledigt \n'+this.zuletzt_gesehen;
         } else {  // service zyklus erledigt
           this.currentItems[index].time_over='0';
-          this.zuletzt_gesehen=this.currentItems[index].work_name+' \n'+this.zuletzt_gesehen;
+          this.restProvider.ShowMessage('Service: '+this.currentItems[index].work_name+' erledigt.');
+          this.zuletzt_gesehen=this.zuletzt_gesehen+' \n'+this.currentItems[index].work_name;
         }
       }//this.restProvider.console_itc( this.currentItems);
       

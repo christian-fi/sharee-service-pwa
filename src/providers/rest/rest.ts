@@ -14,7 +14,7 @@ import {App} from "ionic-angular";
 @Injectable() 
 export class RestProvider {
  
-  apiMerchant_id=apiMerchant_id_conf;
+  apiMerchant_id = apiMerchant_id_conf;
   apiURL=apiUrl_conf;
   
   authcookie:string =window.localStorage.getItem('authcookie'); 
@@ -60,9 +60,11 @@ console_itc(txt:any) { console.log(txt);
 UpdateAktVersion(version:string){ let toast = this.toastCtrl.create({ message: 'Autom. Update auf Neueste Version '+version+' ... ',duration: 5000, position: 'top' }); toast.present(); }    
 keinNetz(){ let toast = this.toastCtrl.create({ message: 'kein Internet/API-Zugriff vorhanden ! ',duration: 10000, position: 'top' }); toast.present(); }    
 keinAuth(){ let toast = this.toastCtrl.create({ message: 'Neu Anmelden - kein korrekter Auth-Cookie vorhanden!',duration: 9000, position: 'top' }); toast.present(); 
-window.localStorage.setItem('authcookie',''); 
-let nav = this.app.getActiveNav(); nav.push('LoginPage');
-}    
+            window.localStorage.setItem('authcookie',''); 
+            let nav = this.app.getActiveNav(); nav.push('LoginPage');
+          }
+ShowMessage(mtext:string){ let toast = this.toastCtrl.create({ message: mtext,duration: 3000, position: 'top' }); toast.present(); } 
+
 auth_okay(authcookie_return:string){
   this.console_itc('auth_itc  :: '+authcookie_return);
   

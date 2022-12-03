@@ -76,7 +76,7 @@
 <!--            <ion-item *ngFor="let station of (stationen | async)?.results" color="positive" on-click="goToStation12Radliste({nr:12})" id="tourStationen-list-item20"> -->
       <ion-item *ngFor="let item of currentItems" color="positive" on-click="goToStationRadliste(item.station)" id="tourStationen-list-item20">
                   
-      <ion-badge style="padding-left:2px;padding-right:2px; idth:60px" [ngClass]="'Station-' + item.group" >{{item.station}}</ion-badge> 
+      <ion-badge style="padding-left:2px;padding-right:2px;" [ngClass]="'Station-' + item.group" >{{item.station}}</ion-badge> 
       &nbsp; 
       <ion-badge class="tst" color="dark">{{item.anzahl}}</ion-badge>
       <ion-badge class="tst" color="light">{{item.soll}}</ion-badge>

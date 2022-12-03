@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (c) Christian Fischer, TeilRad GmbH
 //
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { RestProvider } from '../../providers/rest/rest';
@@ -20,6 +20,7 @@ export class LoginPage {
   };
 
   private loginErrorString: string;
+  @ViewChild('inputToFocus') inputToFocus;
 
   constructor(public navCtrl: NavController,public navParams: NavParams,
     public restProvider: RestProvider,
@@ -53,6 +54,12 @@ export class LoginPage {
       }
           
     });
+    }
+
+    ionViewDidEnter() {
+      setTimeout(() => {
+        this.inputToFocus.setFocus();
+      },100);
     }
   
 

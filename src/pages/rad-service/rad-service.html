@@ -44,39 +44,56 @@
           <span style="white-space: pre;">{{zuletzt_gesehen}}</span>
           <br />   
         </p>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="margin-top:6px" type="tel" size="3" #inputToFocus placeholder="Nr" name="station-id"  [(ngModel)]="new_station_id" (keyup.enter)="saveRadStation();"><!--></ion-searchbar>-->
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="margin-top:6px;margin-left:-10px;" type="tel" size="3" #inputToFocus placeholder="Nr" name="station-id"  [(ngModel)]="new_station_id" (keyup.enter)="saveRadStation();">
         <button class="button-small-md" type=submit ion-button  color="positive" on-click="saveRadStation();">
           GO-Station
         </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <!--<button class="button-small-md" type=submit ion-button  color="miss" on-click="saveAkkuOkay();">
-          Akku Lock
-        </button>
-        <button class="button-small-md" type=submit ion-button  color="miss" on-click="saveAkkuOkay();">
-          Akku Bike
-        </button>-->
-      <form tyle="margin-top:-30px;">
+        
+        <ion-badge id="kku-lock" color="miss"   clear item-right class="akku_info">60%</ion-badge>
+       <button class="button-small-md" ion-button  outline on-click="showConfirm_AkkuVoll('SmartLock');"><ion-icon name="battery-full"  class="akku_aktion_full"></ion-icon></button>
+       &nbsp;&nbsp;&nbsp;
+       <button id="kku-bike" type=submit class="button-small-md" ion-button color="danger" item-right >20%</button>
+       <button class="button-small-md" ion-button  outline on-click="showConfirm_AkkuVoll('Fahrrad');"><ion-icon name="battery-full"  class="akku_aktion_full"></ion-icon></button>
           
-          <ion-label stacked >&nbsp;&nbsp;&nbsp;<ion-icon name="build" item-right *ngIf="todo_info=='1'">&nbsp;</ion-icon>Aufgabe
-            <!--<ion-icon name="checkmark-circle" color="danger"  item-right  ></ion-icon>-->
-          </ion-label>  
-            
-          <ion-item>
-            <ion-textarea placeholder="hier eingeben was zu tun ist " type="text" [(ngModel)]="aufgabe" name="aufgaben" rows=2></ion-textarea>
-            <!--
-            <ion-icon name="checkmark-circle" color="danger"  item-right  on-click="saveRadAufgabe()"></ion-icon>
-            <ion-icon name="checkmark-circle" color="secondary"  item-right on-click="saveRadAufgabe()"></ion-icon>
-            -->
-          </ion-item>
+        <ion-label stacked  >&nbsp;&nbsp;&nbsp;<ion-icon name="build" item-right *ngIf="todo_info=='1'">&nbsp;</ion-icon>Aufgabe &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--<button class="button-small-md" ion-button  outline on-click="showConfirm_AkkuVoll('Fahrrad');">  <ion-icon name="add-circle" color="aktion-blue" style="font-size: 25px;"></ion-icon></button>-->
+        </ion-label>  
+        <div id="aufgaben_div">
+        <!-- <form>
+            <ion-textarea placeholder="hier eingeben was zu tun ist " type="text" [(ngModel)]="aufgabe" name="aufgaben" rows=2></ion-textarea>          
           <button class="button-small-md" type=submit ion-button color="positive" icon-right on-click="saveRadService('txt01',aufgabe,'aufgabe');" >
-          <ion-icon ame="arrow-down" ></ion-icon>Speichern
-        </button>
-        <button class="button-small-md" type=submit ion-button color="positive" on-click="saveRadService('txt01','::erledigt::',sid_erledigt);">
-          <ion-icon ame="checkmark"></ion-icon>&nbsp;erledigt
-      </button>
+            Speichern
+          </button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ion-icon name="checkmark-circle" color="secondary"  item-right  on-click="saveRadService()" style="font-size: 35px;"></ion-icon>
+        </form>
+      <hr> -->
+      <form>
+        <ion-textarea placeholder="... hier eingeben was zu tun ist " type="text" [(ngModel)]="aufgabe" name="aufgaben" rows=2></ion-textarea>          
+        <button class="button-small-md" type=submit ion-button color="positive" on-click="saveRadService('txt01',aufgabe,'aufgabe');" >Speichern</button>
+        <button class="button-small-md" type=submit ion-button color="positive" on-click="saveRadService('txt01','::erledigt::',sid_erledigt);">&nbsp;Erledigt</button>  
+        <button class="button-small-md" type=submit ion-button color="positive" item-right on-click="saveRadService('txt01','::erledigt::',sid_erledigt);">&nbsp;NEU</button>  
+      </form>
+    <hr>
+    <!--
+      <form>
+        <ion-textarea placeholder="hier eingeben was zu tun ist " type="text" [(ngModel)]="aufgabe1" name="aufgaben" rows=2></ion-textarea>
+        
+        <ion-icon name="arrow-dropdown" color="aktion-blue"  item-right  on-click="saveRadAufgabe()"></ion-icon>
+        <ion-icon name="checkmark-circle" color="secondary"  item-right on-click="saveRadAufgabe()"></ion-icon>
       
     </form> 
-
-      <ion-item *ngFor="let item of currentItems; let i = index" color="positive"  id="" >
+    <hr>
+    <form>
+        <ion-textarea placeholder="hier eingeben was zu tun ist " type="text" [(ngModel)]="aufgabe2" name="aufgaben" rows=2></ion-textarea>
+        
+        <ion-icon name="arrow-dropdown" color="tink-blue"  item-right  on-click="saveRadAufgabe()"></ion-icon>
+        <ion-icon name="checkmark-circle" color="secondary"  item-right on-click="saveRadAufgabe()"></ion-icon>
+        
+    </form> 
+    <hr>
+  -->
+</div>
+  <ion-item *ngFor="let item of currentItems; let i = index" color="positive"  id="" >
         
         <ion-label><ion-badge color="secondary" *ngIf="item.service_type=='2'" class="station">&nbsp;</ion-badge>{{item.work_name}} {{item.mtime.substr(8,2)}}.{{item.mtime.substr(5,2)}}.{{item.mtime.substr(2,2)}}+{{item.interval}}T <!--(hw {{item.service_type}})--></ion-label>
         <ion-icon name="checkmark-circle" color="danger"  item-right *ngIf="item.time_over=='1'" on-click="saveRadService(item.work_id,1,i)"></ion-icon>
@@ -94,9 +111,9 @@
 <hr>
 &nbsp;&nbsp;&nbsp;&nbsp;Service-Logbuch:&nbsp;&nbsp;
 <form>
-  <ion-input #inputToFocus placeholder="30" name="nummer" [(ngModel)]="suchenr"  (keyup.enter)="readServiceLog()"></ion-input>
+  <ion-input placeholder="30" name="nummer" [(ngModel)]="suchenr"  (keyup.enter)="readServiceLog()"></ion-input>
 </form>
-<ion-item><button  ion-button color="positive" block icon-left style="border-radius:10px 10px 10px 10px;" on-click="readServiceLog()">Jetzt Anzeigen
+<ion-item><button  ion-button color="positive" block icon-left style="border-radius:10px 10px 10px 10px;" on-click="readServiceLog()">Jetzt Logbuch Anzeigen
 </button></ion-item>
 
 <ion-item *ngFor="let item of currentItemsLog; let i = index" color="positive"  id="" >
@@ -108,28 +125,5 @@
    <ion-label on-click="readServiceLog()">zur Anzeige bitte klicken, scrollen <ion-icon  name="checkmark-circle" color="secondary"  item-right  ></ion-icon></ion-label>
 </ion-item>
 
-
-     
-     
-      <!--<br><br> 
-      <ion-item>
-          <ion-label> Reifen</ion-label>
-          <ion-toggle checked="true" color="danger" ></ion-toggle>
-        </ion-item>
-        <ion-item>
-            <ion-label> Bremse</ion-label>
-            <button ion-button color="positive">
-              <ion-icon name="checkmark"></ion-icon>&nbsp;erledigt
-          </button>
-          </ion-item>
-          <ion-item>
-              <ion-label color="danger"> Lampe</ion-label>
-              <ion-toggle checked="false" color="danger"></ion-toggle>
-            </ion-item>
-              <ion-item>
-            <ion-label> Luftdruck</ion-label>
-            <ion-toggle disabled checked="false" color="secondary"></ion-toggle>
-          </ion-item>
-        -->
           
   </ion-content>

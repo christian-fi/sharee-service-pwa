@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (c) Christian Fischer, TeilRad GmbH
 //
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Component, ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
-
+import { AlertController } from 'ionic-angular';
 import { RestProvider } from '../../providers/rest/rest';
 
 @IonicPage()
@@ -32,10 +33,22 @@ export class RadServicePage {
   @ViewChild('inputToFocus') inputToFocus;
   
   constructor(public navCtrl: NavController, public navParams: NavParams,public restProvider: RestProvider,
-              public toastCtrl: ToastController ) {
+              public toastCtrl: ToastController, public alertCtrl: AlertController ) {
   }
 
-  getTinkRad(id:string) { 
+  showConfirm_AkkuVoll(akku_typ:string) {
+    const confirm = this.alertCtrl.create({
+      title: 'Ist der '+akku_typ+' Akku jetzt vollgeladen?',
+      message: 'Wenn sie -JA- bestätigen wird diese Info gespeichert',
+      buttons: [
+        { text: 'JA', handler: () => { this.restProvider.ShowMessage(akku_typ+' Akku vollgeladen!'); console.log('Ja Akku voll - clicked');  }  },
+        { text: 'Nein, noch nicht', handler: () => { console.log('Akku nicht voll - clicked'); }  }
+      ]
+    });
+    confirm.present();
+  }
+
+   getTinkRad(id:string) {  
     this.restProvider.getTinkRaederRad(id)
     .then(data => { 
       var result =[];
@@ -195,9 +208,9 @@ export class RadServicePage {
   }
 
   ionViewDidEnter() {
-  //  setTimeout(() => {
-  //    this.inputToFocus.setFocus();
-  //  },100);
+ //   setTimeout(() => {
+ //     this.inputToFocus.setFocus();
+ //   },100);
   }
   
   ionViewWillEnter() {

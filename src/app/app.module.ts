@@ -28,7 +28,7 @@ import { RestProvider } from '../providers/rest/rest';
       mode: 'md', // 'md' | 'ios' | 'wp'
       backButtonIcon: 'ios-arrow-back',
       backButtonText: '',
-      iconMode: 'ios',
+      iconMode: 'md', //ios
       modalEnter: 'modal-slide-in',
       modalLeave: 'modal-slide-out',
       tabsPlacement: 'bottom',

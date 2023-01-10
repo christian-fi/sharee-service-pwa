@@ -5,12 +5,16 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { RadServicePage } from './rad-service';
 
+import {AutosizeModule} from 'ngx-autosize';
+
 @NgModule({
   declarations: [
     RadServicePage,
   ],
   imports: [
-    IonicPageModule.forChild(RadServicePage),
+    IonicPageModule.forChild(RadServicePage), AutosizeModule
   ],
 })
 export class RadServicePageModule {}
+
+

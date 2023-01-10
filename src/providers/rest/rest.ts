@@ -59,10 +59,12 @@ console_itc(txt:any) { console.log(txt);
 
 UpdateAktVersion(version:string){ let toast = this.toastCtrl.create({ message: 'Autom. Update auf Neueste Version '+version+' ... ',duration: 5000, position: 'top' }); toast.present(); }    
 keinNetz(){ let toast = this.toastCtrl.create({ message: 'kein Internet/API-Zugriff vorhanden ! ',duration: 10000, position: 'top' }); toast.present(); }    
-keinAuth(){ let toast = this.toastCtrl.create({ message: 'Neu Anmelden - kein korrekter Auth-Cookie vorhanden!',duration: 9000, position: 'top' }); toast.present(); 
-            window.localStorage.setItem('authcookie',''); 
-            let nav = this.app.getActiveNav(); nav.push('LoginPage');
+ServiceDoneError (){ let toast = this.toastCtrl.create({ message: 'Service Done Error - kein OK erhalten!',duration: 9000, position: 'top' }); toast.present(); 
           }
+keinAuth(){ let toast = this.toastCtrl.create({ message: 'Neu Anmelden - kein korrekter Auth-Cookie vorhanden!',duration: 9000, position: 'top' }); toast.present(); 
+          window.localStorage.setItem('authcookie',''); 
+          let nav = this.app.getActiveNav(); nav.push('LoginPage');
+        }
 ShowMessage(mtext:string){ let toast = this.toastCtrl.create({ message: mtext,duration: 3000, position: 'top' }); toast.present(); } 
 
 auth_okay(authcookie_return:string){
@@ -100,21 +102,49 @@ rad_not_moved(sid:string){ let toast = this.toastCtrl.create({ message: 'Falsche
   return data_return;
   }
     
-  saveServiceBikeNR(bike_id:string,work_id:string,work_val:string,sid_erledigt:string) { 
+  saveServiceBikeNR(bike_id:string,work_id:string,work_val:string,extra_param:string) { 
   var aco:string ='&authcookie='+window.localStorage.getItem('authcookie'); 
-  var s_erledigt:string =''; 
-  if (sid_erledigt!=='' ) { s_erledigt='&service_id='+sid_erledigt; }  
+  var extra:string =''; 
+  if (work_val=='::new_task::' ) {  extra_param=''; }  // neue Aufgabe anlegen
+  else if (extra_param!=='' ) { extra='&service_id='+extra_param; }
   return new Promise(resolve => {  
     //this.http.get(this.apiURL+this.SaveServiceBikeNR+bike_id+'&work_id='+work_id+'&work_val='+encodeURIComponent(work_val)+aco)
-    this.http.get(this.apiUrlOperator+this.SaveServiceBikeNR+bike_id+'&work_id='+work_id+'&work_val='+encodeURIComponent(work_val)+s_erledigt+aco)
+    if (work_val != '::new_task::') work_val=encodeURIComponent(work_val);  
+    this.http.get(this.apiUrlOperator+this.SaveServiceBikeNR+bike_id+'&work_id='+work_id+'&work_val='+work_val+extra+aco)
     .subscribe(data => {
-    if (data['shareejson']['response_state'].substring(0,2)!=this.response_state_OK || data['shareejson']['authcookie']==this.authcookie_leer) 
+      if (data['shareejson']['response_state'].substring(0,2)!=this.response_state_OK || data['shareejson']['authcookie']==this.authcookie_leer) 
+      { this.ServiceDoneError(); } //new feb19 + jan22
+    if (data['shareejson']['authcookie']==this.authcookie_leer) 
       { this.keinAuth(); } //new feb19 + jan22
-    this.auth_okay(data['shareejson']['authcookie']); 
+    else this.auth_okay(data['shareejson']['authcookie']); 
     resolve(data['shareejson'][bike_id]);
     }, err => {     this.keinNetz();       this.console_itc(err);           },
       ()=> {
-        this.console_itc('copi rad nr'+bike_id+' gespeichert '+this.apiUrlOperator+this.SaveServiceBikeNR+bike_id+'&work_id='+work_id+'&work_val='+encodeURIComponent(work_val)+s_erledigt+aco);
+        this.console_itc('copi rad nr'+bike_id+' gespeichert '+this.apiUrlOperator+this.SaveServiceBikeNR+bike_id+'&work_id='+work_id+'&work_val='+encodeURIComponent(work_val)+extra+aco);
+      } 
+      );
+      });
+  }
+
+  saveServiceStationNR(id:string,work_id:string,work_val:string,extra_param:string) {    
+  //if (id.length==1) id='0'+id; 
+  var station_id; station_id=id;//station_id=10+id;
+  var aco:string ='&authcookie='+window.localStorage.getItem('authcookie'); 
+  var extra:string ='';
+  if (work_val=='::new_task::' ) {  extra_param=''; }  // neue Aufgabe anlegen
+  else if (extra_param!=='' ) { extra='&service_id='+extra_param; }
+  return new Promise(resolve => { 
+    //this.http.get(this.apiURL+this.SaveServiceStationNR+station_id+'&work_id='+work_id+'&work_val='+encodeURIComponent(work_val)+aco)
+    if (work_val != '::new_task::') work_val=encodeURIComponent(work_val);  
+    this.http.get(this.apiUrlOperator+this.SaveServiceStationNR+station_id+'&work_id='+work_id+'&work_val='+work_val+extra+aco)
+    .subscribe(data => {
+    if (data['shareejson']['response_state'].substring(0,2)!=this.response_state_OK || data['shareejson']['authcookie']==this.authcookie_leer) 
+      { this.keinAuth(); } //new feb19
+    this.auth_okay(data['shareejson']['authcookie']); 
+    resolve(data['shareejson'][station_id]);
+    }, err => {  this.keinNetz();       this.console_itc(err);           },
+      ()=> {
+        this.console_itc('copi station nr'+id+' gespeichert '+this.apiUrlOperator+this.SaveServiceStationNR+station_id+'&work_id='+work_id+'&work_val='+work_val+extra+aco);
       } 
       );
       });
@@ -158,25 +188,6 @@ rad_not_moved(sid:string){ let toast = this.toastCtrl.create({ message: 'Falsche
       }
       
 
-  saveServiceStationNR(id:string,work_id:string,work_val:string,) {    
-    //if (id.length==1) id='0'+id; 
-    var station_id; station_id=id;//station_id=10+id;
-    var aco:string ='&authcookie='+window.localStorage.getItem('authcookie'); 
-  return new Promise(resolve => { 
-    //this.http.get(this.apiURL+this.SaveServiceStationNR+station_id+'&work_id='+work_id+'&work_val='+encodeURIComponent(work_val)+aco)
-    this.http.get(this.apiUrlOperator+this.SaveServiceStationNR+station_id+'&work_id='+work_id+'&work_val='+encodeURIComponent(work_val)+aco)
-    .subscribe(data => {
-    if (data['shareejson']['response_state'].substring(0,2)!=this.response_state_OK || data['shareejson']['authcookie']==this.authcookie_leer) 
-      { this.keinAuth(); } //new feb19
-    this.auth_okay(data['shareejson']['authcookie']); 
-    resolve(data['shareejson'][station_id]);
-    }, err => {  this.keinNetz();       this.console_itc(err);           },
-      ()=> {
-        this.console_itc('copi station nr'+id+' gespeichert '+this.apiUrlOperator+this.SaveServiceStationNR+station_id+'&work_id='+work_id+'&work_val='+encodeURIComponent(work_val)+aco);
-      } 
-      );
-      });
-  }
 
   getTinkStationen( ac:string) {    return new Promise(resolve => { 
     //        this.http.get(this.url).subscribe(data => {
@@ -284,7 +295,7 @@ getTinkRaederAll(ac:string) {    return new Promise(resolve => {
  }, err => {         this.keinNetz();this.console_itc(err);       },
      ()=> {
        // this.loading.dismiss();
-       this.console_itc('copi raeder all geladen:' +this.apiURL+this.BikesALL+aco);
+       this.console_itc('copi raeder all geladen: ' +this.apiURL+this.BikesALL+aco);
      }
      );
      });
@@ -304,7 +315,7 @@ getTinkRadService(id:string) {    return new Promise(resolve => {
  }, err => {         this.keinNetz();this.console_itc(err);       },
      ()=> {
        this.loading.dismiss();
-       this.console_itc('copi rad service nr '+id+' geladen:'+this.apiUrlOperator+this.ServiceBikeNR+id+aco);
+       this.console_itc('copi rad service nr '+id+' geladen: '+this.apiUrlOperator+this.ServiceBikeNR+id+aco);
      }
      );
      });

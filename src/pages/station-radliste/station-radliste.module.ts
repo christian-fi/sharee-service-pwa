@@ -5,12 +5,14 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { StationRadlistePage } from './station-radliste';
 
+import {AutosizeModule} from 'ngx-autosize';
+
 @NgModule({
   declarations: [
     StationRadlistePage,
   ],
   imports: [
-    IonicPageModule.forChild(StationRadlistePage),
+    IonicPageModule.forChild(StationRadlistePage), AutosizeModule
   ],
 })
 export class StationRadlistePageModule {}

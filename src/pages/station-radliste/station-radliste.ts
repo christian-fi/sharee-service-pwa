@@ -15,6 +15,7 @@ import { RestProvider } from '../../providers/rest/rest';
 export class StationRadlistePage {
   id: any; nid:any;
   currentItems: any;
+  currentItemsAufgaben: any;
   loading: any;
   aufgabe:string;
   aufgabe_api:string;
@@ -24,6 +25,8 @@ export class StationRadlistePage {
   rad_typ: string;
   zuletzt_gesehen:string;
   service_gesehen=[];
+  erledigt_txt='::erledigt::';
+  todo_info='';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public restProvider: RestProvider,
     public toastCtrl: ToastController) {
@@ -65,32 +68,49 @@ function itc_sort_bike(b,a){
             result.push(data[key]);            
             //this.restProvider.console_itc( key +'---'+ Array.of(data[key]));
         }
-      }  
+      } 
+    
+      function itc_sort_zuletzt(a,b){  
+        if (b['mtime']==a['mtime']) return a['work_name'].localeCompare(b['work_name']); 
+        return b['mtime'].localeCompare(a['mtime']); 
+      } 
     if (result.length >0) {  // kein service daten ergebnis ?
-      
-      
+      result.sort(itc_sort_zuletzt);
+    
       let ri=0;
       this.aufgabe_api='';
+      var result_aufgaben =[];
+      var decodeHTML = function (html) { var txt = document.createElement('textarea'); txt.innerHTML = html; return txt.value; };
       for (var key in result) {
         // aufgabe auslesen
         //this.restProvider.console_itc("ri: "+ri);
         //this.restProvider.console_itc( result[key]['work_val']);
         if( result[key]['work_id']=='txt01')  {
-          this.aufgabe= result[key]['work_val'];
+          this.restProvider.console_itc( 'aufgabe-work_val:'+ result[key]['work_val']);
+          if (result[key]['work_val'] != this.erledigt_txt) {
+            result[key]['work_val']=decodeHTML(result[key]['work_val']); 
+            result_aufgaben.push(result[key]);  
+          }    
+      
+
+
+          //this.aufgabe= result[key]['work_val'];
+          
           this.aufgabe_api=this.aufgabe;
           if( this.aufgabe=='::erledigt::') this.aufgabe='';
           //new 13.23.21 - not needed
           //if( this.aufgabe=='NaN') this.aufgabe='';     
           else this.zuletzt_gesehen=' - von: '+result[key]['user_name']+' am: '+result[key]['mtime'].substr(8,2)+'.'+result[key]['mtime'].substr(5,2)+'.'+result[key]['mtime'].substr(2,2)+' '+result[key]['mtime'].substr(11,5); 
-          result.splice(ri,1);
+          //result.splice(ri,1);
         }
         ri=ri+1; 
       }
       
     } 
-      var decodeHTML = function (html) { var txt = document.createElement('textarea'); txt.innerHTML = html; return txt.value; };
-      this.aufgabe=decodeHTML(this.aufgabe); 
-      this.restProvider.console_itc( this.aufgabe);
+      //this.aufgabe=decodeHTML(this.aufgabe); 
+      this.currentItemsAufgaben=result_aufgaben;
+      if (this.currentItemsAufgaben!='') this.todo_info='1';
+      this.restProvider.console_itc( this.currentItemsAufgaben);
       });
   }
 
@@ -129,15 +149,32 @@ function itc_sort_bike(b,a){
       });
   }
 
-  saveStationService(work_id:string,work_val:string) { 
-    this.restProvider.console_itc('saveStationItems: '+work_id+' '+work_val);
-    this.restProvider.saveServiceStationNR(this.id,work_id,work_val) 
+  saveStationService(work_id:string,work_val:string,index:string) { 
+  if (work_val!=='') { 
+    this.restProvider.console_itc('saveStationItems: '+work_id+' '+work_val+' '+index);
+    this.restProvider.saveServiceStationNR(this.id,work_id,work_val,index) 
     .then(data => { 
       //this.currentItems=result;
-      this.ionViewWillEnter();
-      //this.restProvider.console_itc( this.currentItems);
+
+      //this.ionViewWillEnter();
+      if (index!=='' ) {
+        if (work_val.toString().substring(0,12)==this.erledigt_txt) {
+          this.todo_info='0';
+          this.aufgabe='';this.aufgabe_api=this.erledigt_txt;
+          this.restProvider.ShowMessage('Aufgabe erledigt !');
+          this.ionViewWillEnter();
+        } else if (index=='::new_task::' )  {
+          this.todo_info='1';
+          this.restProvider.ShowMessage('Neue Aufgabe !');
+          this.ionViewWillEnter();
+        } else if (index > '100') {  // Aufagben mit index große zahl
+          this.todo_info='1';
+          this.restProvider.ShowMessage('Aufgabe gespeichert !');
+        } 
+      }//this.restProvider.console_itc( this.currentItems);
       });
   }
+}
 
 
   ionViewDidLoad() {

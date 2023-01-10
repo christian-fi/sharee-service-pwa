@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (c) Christian Fischer, TeilRad GmbH
 //
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,10 +14,10 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { RestProvider } from '../providers/rest/rest';
 
-    //IonicModule.forRoot(MyApp),
-    @NgModule({
+//IonicModule.forRoot(MyApp),
+  @NgModule({
   declarations: [
-    MyApp
+     MyApp  
   ],
   imports: [
     BrowserModule,

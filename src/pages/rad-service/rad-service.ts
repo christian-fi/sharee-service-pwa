@@ -1,11 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (c) Christian Fischer, TeilRad GmbH
 //
+
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+
 import { Component, ViewChild} from '@angular/core';
+
 import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { RestProvider } from '../../providers/rest/rest';
+ 
 
 @IonicPage()
 @Component({
@@ -13,8 +17,10 @@ import { RestProvider } from '../../providers/rest/rest';
   templateUrl: 'rad-service.html',
 })
 export class RadServicePage {
+  
   id: any; nid: any;
   currentItems: any;
+  currentItemsAufgaben: any;
   currentItemsLog: any;
   aufgabe: string;
   sid_erledigt: string;
@@ -30,18 +36,39 @@ export class RadServicePage {
   bike_station: string;
   suchenr: string;
   new_station_id: string;
+  smartlock_charge: string;
+  bike_charge: string;
+  erledigt_txt='::erledigt::';
+  //new_task_txt='::new_task::';
   @ViewChild('inputToFocus') inputToFocus;
-  
+
+/**
+ * function to adjust the height of the message textarea
+ * @param {any} event - the event, which is provided by the textarea input
+ * @return {void} 
+ */
+protected adjustTextarea(event: any): void {
+	let textarea: any		= event.target;
+	textarea.style.overflow = 'hidden';
+	textarea.style.height 	= 'auto';
+	textarea.style.height 	= textarea.scrollHeight + 'px';
+	return;
+}
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams,public restProvider: RestProvider,
               public toastCtrl: ToastController, public alertCtrl: AlertController ) {
   }
-
+  
   showConfirm_AkkuVoll(akku_typ:string) {
+    var akku_typ_info:string;
+    if (akku_typ=='smart_battery_charge') akku_typ_info='Smartlock Akku';
+    if (akku_typ=='bike_battery_charge') akku_typ_info='Rad Akku';
     const confirm = this.alertCtrl.create({
-      title: 'Ist der '+akku_typ+' Akku jetzt vollgeladen?',
-      message: 'Wenn sie -JA- bestätigen wird diese Info gespeichert',
+      title: 'Ist der '+akku_typ_info+' jetzt vollgeladen?',
+      message: '-JA- setzt den Akku auf 100%',
       buttons: [
-        { text: 'JA', handler: () => { this.restProvider.ShowMessage(akku_typ+' Akku vollgeladen!'); console.log('Ja Akku voll - clicked');  }  },
+        { text: 'JA', handler: () => { this.saveRadService(akku_typ,'100',akku_typ); this.restProvider.ShowMessage(akku_typ+' vollgeladen!'); console.log('Ja Akku voll - clicked');  }  },
         { text: 'Nein, noch nicht', handler: () => { console.log('Akku nicht voll - clicked'); }  }
       ]
     });
@@ -59,7 +86,7 @@ export class RadServicePage {
         }
       } 
       if (result.length==0) { // keine station vorhanden
-        let toast = this.toastCtrl.create({ message: 'keine Rad Nr: '+id+' vorhanden',duration: 3000, position: 'top' });
+        let toast = this.toastCtrl.create({ message: 'kein Rad Nr: '+id+' vorhanden',duration: 3000, position: 'top' });
         toast.present();
         this.navCtrl.push('RadSuchePage' );
       } else {
@@ -71,6 +98,12 @@ export class RadServicePage {
         //this.bike_group=result[0]['bike_group'][0];
         this.bike_group='sharee';
         this.bike_station=result[0]['station'];
+        this.smartlock_charge=result[0]['smartlock_type']['battery']['charge_current_percent'];
+        if (this.smartlock_charge =='') this.smartlock_charge='0';
+        //if ('battery' in result[0]['bike_type'] ) this.bike_charge=result[0]['bike_type']['battery']['charge_current_percent'];
+        if (result[0]['bike_type']['battery'] !== undefined  ) this.bike_charge=result[0]['bike_type']['battery']['charge_current_percent'];
+        else this.bike_charge='nd';
+        //this.bike_charge=result[0]['bike_type']['battery']['charge_current_percent'];
 
         // set URI_OP
         window.localStorage.setItem('uri_operator',result[0]['uri_operator']);
@@ -115,35 +148,45 @@ export class RadServicePage {
           if (result[ra]['mtime']==result[0]['mtime'] ) { 
           let sp=', '; if ( ra%2==0 ) sp=',\n'; if ( ra==0) sp='\n'; 
           this.zuletzt_gesehen=this.zuletzt_gesehen+sp+result[ra]['work_name'];
-          if( result[ra]['work_name']=='Aufgaben' && result[ra]['work_val']=='::erledigt::') this.zuletzt_gesehen=this.zuletzt_gesehen+' erledigt';
+          if( result[ra]['work_name']=='Aufgaben' && result[ra]['work_val']==this.erledigt_txt) this.zuletzt_gesehen=this.zuletzt_gesehen+' erledigt';
           
           }
           ra=ra+1; 
         }
 
-      this.aufgabe=''; let ri=0; 
+      this.aufgabe=''; let ri=0;
+      var result_aufgaben =[]; var result_service =[]; 
+      var decodeHTML = function (html) { var txt = document.createElement('textarea'); txt.innerHTML = html; return txt.value; };
       for (var key in result) {
         // aufgabe auslesen
-        //this.restProvider.console_itc("ri: "+ri);
+        this.restProvider.console_itc("ri: "+ri);
+        //if( result[key]['work_id']=='txt01')  {
         if( result[key]['work_id']=='txt01')  {
-          this.restProvider.console_itc( 'aufgabe-work_val:'+ result[key]['work_val']);
-          this.aufgabe= result[key]['work_val']; 
+            this.restProvider.console_itc( 'aufgabe-work_val:'+ result[key]['work_val']);
+            if (result[key]['work_val'] != this.erledigt_txt) {
+              result[key]['work_val']=decodeHTML(result[key]['work_val']); 
+              result_aufgaben.push(result[key]);  
+            }    
+            
+            //this.aufgabe= result[key]['work_val']; 
           this.sid_erledigt= result[key]['service_id']; 
-          result.splice(ri,1);
+          //result.splice(ri,1); 
+        } else {
+          result_service.push(result[key]);  
         }
         ri=ri+1; 
       }
       this.aufgabe_api=this.aufgabe;
       if( this.aufgabe=='NaN') this.aufgabe='';
-      if( this.aufgabe.toString().substr(0,12)=='::erledigt::') this.aufgabe='';
+      if( this.aufgabe.toString().substr(0,12)==this.erledigt_txt) this.aufgabe='';
       
-      result.sort(itc_sort_time_over);
+      result_service.sort(itc_sort_time_over);
     } 
-    var decodeHTML = function (html) { var txt = document.createElement('textarea'); txt.innerHTML = html; return txt.value; };
-    this.aufgabe=decodeHTML(this.aufgabe); 
-
-      this.currentItems=result;
-      this.restProvider.console_itc( this.currentItems);
+    
+    
+    this.currentItems=result_service;
+    this.currentItemsAufgaben=result_aufgaben;
+    this.restProvider.console_itc( this.currentItems);
       });
   }
 
@@ -238,9 +281,10 @@ export class RadServicePage {
   saveRadService(work_id:string,work_val:string,index:string) { 
     if (work_val!=='') { 
       this.restProvider.console_itc('saveTinkItems: '+work_id+' '+work_val);
-      var sid_erledigt='';
-      if (work_val.toString().substring(0,12)=='::erledigt::') { sid_erledigt=index; }
-      this.restProvider.saveServiceBikeNR(this.nid,work_id,work_val,sid_erledigt) 
+      //var sid_erledigt='';
+      //if (work_val.toString().substring(0,12)==this.erledigt_txt) { sid_erledigt=index; }
+      //this.restProvider.saveServiceBikeNR(this.nid,work_id,work_val,sid_erledigt)
+      this.restProvider.saveServiceBikeNR(this.nid,work_id,work_val,index) 
     .then(data => { 
       //this.currentItems=result;
       
@@ -250,6 +294,10 @@ export class RadServicePage {
           this.service_state='1';
           this.restProvider.ShowMessage('Rad defekt !');
           //this.zuletzt_gesehen='Rad defekt \n'+this.zuletzt_gesehen;
+        } else if (index=='smart_battery_charge') {
+          this.smartlock_charge='100';
+        } else if (index=='bike_battery_charge') {
+          this.bike_charge='100';
         } else if (index=='available') {
           this.service_state='0';
           this.restProvider.ShowMessage('Rad available !');
@@ -259,13 +307,19 @@ export class RadServicePage {
           this.restProvider.ShowMessage('Aufgabe gespeichert !');
           //this.zuletzt_gesehen='Aufgabe gespeichert \n'+this.zuletzt_gesehen;
           this.aufgabe_api=this.aufgabe;
-        //} else if (index=='erledigt') {
-        } else if (work_val.toString().substring(0,12)=='::erledigt::') {
+        } else if (work_val.toString().substring(0,12)==this.erledigt_txt) {
           this.todo_info='0';
-          this.aufgabe='';this.aufgabe_api='::erledigt::';
+          this.aufgabe='';this.aufgabe_api=this.erledigt_txt;
           this.restProvider.ShowMessage('Aufgabe erledigt !');
-          //this.zuletzt_gesehen='Aufgabe erledigt \n'+this.zuletzt_gesehen;
-        } else {  // service zyklus erledigt
+          this.ionViewWillEnter();
+        } else if (index=='::new_task::' )  {
+          this.todo_info='1';
+          this.restProvider.ShowMessage('Neue Aufgabe !');
+          this.ionViewWillEnter();
+        } else if (index > '100') {  // Aufagben mit index große zahl
+          this.todo_info='1';
+          this.restProvider.ShowMessage('Aufgabe gespeichert !');
+        } else if (index < '100') {  // service zyklus erledigt
           this.currentItems[index].time_over='0';
           this.restProvider.ShowMessage('Service: '+this.currentItems[index].work_name+' erledigt.');
           this.zuletzt_gesehen=this.zuletzt_gesehen+' \n'+this.currentItems[index].work_name;
@@ -275,6 +329,7 @@ export class RadServicePage {
     });
   }
 }
+
 saveRadWerkstatt() { 
   this.restProvider.console_itc('saveRadWerkstatt: ');
   this.restProvider.saveServiceBikeNR_Werkstatt(this.nid) 
@@ -293,7 +348,7 @@ saveRadWerkstatt() {
       this.aufgabe_api=this.aufgabe;
     } else if (index=='erledigt') {
       this.todo_info='0';
-      this.aufgabe='';this.aufgabe_api='::erledigt::';
+      this.aufgabe='';this.aufgabe_api=this.erledigt_txt;
       this.zuletzt_gesehen='Aufgabe erledigt \n'+this.zuletzt_gesehen;
     } else {  // service zyklus erledigt
       this.currentItems[index].time_over='0';

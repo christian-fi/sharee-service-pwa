@@ -3,7 +3,7 @@
 //
 declare var version_akt, shareeLive_conf, version_check_conf;
 
-import { Component } from '@angular/core';
+import { Component ,NgModule} from '@angular/core';
 import { IonicPage, NavController, NavParams, reorderArray } from 'ionic-angular';
 
 //import { Observable } from 'rxjs/Observable';
@@ -18,7 +18,6 @@ import { RestProvider } from '../../providers/rest/rest';
   templateUrl: 'tour-start.html',
 })
 export class TourStartPage {
-
    currentItems : any;
    raederItems : any;
    stations = [];

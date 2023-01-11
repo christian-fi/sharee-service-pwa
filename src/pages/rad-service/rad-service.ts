@@ -29,6 +29,7 @@ export class RadServicePage {
   zuletzt_gesehen: string;
   zuletzt_gesehenLog: string;
   service_state:string;
+  state:string;
   todo_info:string; 
   service_code =[]; 
   description:string; 
@@ -62,13 +63,13 @@ protected adjustTextarea(event: any): void {
   
   showConfirm_AkkuVoll(akku_typ:string) {
     var akku_typ_info:string;
-    if (akku_typ=='smart_battery_charge') akku_typ_info='Smartlock Akku';
+    if (akku_typ=='smartlock_battery_charge') akku_typ_info='Smartlock Akku';
     if (akku_typ=='bike_battery_charge') akku_typ_info='Rad Akku';
     const confirm = this.alertCtrl.create({
       title: 'Ist der '+akku_typ_info+' jetzt vollgeladen?',
       message: '-JA- setzt den Akku auf 100%',
       buttons: [
-        { text: 'JA', handler: () => { this.saveRadService(akku_typ,'100',akku_typ); this.restProvider.ShowMessage(akku_typ+' vollgeladen!'); console.log('Ja Akku voll - clicked');  }  },
+        { text: 'JA', handler: () => { this.saveRadService(akku_typ,'100',''); this.restProvider.ShowMessage(akku_typ+' vollgeladen!'); console.log('Ja Akku voll - clicked');  }  },
         { text: 'Nein, noch nicht', handler: () => { console.log('Akku nicht voll - clicked'); }  }
       ]
     });
@@ -93,6 +94,7 @@ protected adjustTextarea(event: any): void {
         this.service_code=result[0]['service_code'];this.restProvider.console_itc( "this.service_code = "+this.service_code);    
         //this.sc1=result[0]['service_code'][0];     this.sc1=this.service_code[0];     
         this.service_state=result[0]['service_state'];this.restProvider.console_itc( "this.service_state = "+this.service_state);        
+        this.state=result[0]['state']; //this.restProvider.console_itc( "this.service_state = "+this.service_state);        
         this.todo_info=result[0]['todo_info'];
         this.description=result[0]['description'];
         //this.bike_group=result[0]['bike_group'][0];
@@ -125,6 +127,10 @@ protected adjustTextarea(event: any): void {
       function itc_sort_zuletzt(a,b){  
         if (b['mtime']==a['mtime']) return a['work_name'].localeCompare(b['work_name']); 
         return b['mtime'].localeCompare(a['mtime']); 
+      }
+      function itc_sort_zuerst(a,b){  
+        if (b['mtime']==a['mtime']) return b['work_name'].localeCompare(a['work_name']); 
+        return a['mtime'].localeCompare(b['mtime']); 
       }
       function itc_sort_time_over(a,b){
          if (a['service_type'] > b['service_type']) { return  -1;} 
@@ -180,12 +186,12 @@ protected adjustTextarea(event: any): void {
       if( this.aufgabe=='NaN') this.aufgabe='';
       if( this.aufgabe.toString().substr(0,12)==this.erledigt_txt) this.aufgabe='';
       
-      result_service.sort(itc_sort_time_over);
+      //result_service.sort(itc_sort_time_over);
     } 
     
     
-    this.currentItems=result_service;
-    this.currentItemsAufgaben=result_aufgaben;
+    this.currentItems=result_service.sort(itc_sort_time_over);
+    this.currentItemsAufgaben=result_aufgaben.sort(itc_sort_zuerst);
     this.restProvider.console_itc( this.currentItems);
       });
   }
@@ -276,25 +282,32 @@ protected adjustTextarea(event: any): void {
     this.restProvider.console_itc('ionViewDidLoad - enter RadServicePage');
    // this.ionViewDidLoad();
   }
-  readServiceLog() {    this.getTinkItemsLog(this.nid,this.suchenr);   }
+  readServiceLog() {  this.getTinkItemsLog(this.nid,this.suchenr);   }
 
   saveRadService(work_id:string,work_val:string,index:string) { 
     if (work_val!=='') { 
       this.restProvider.console_itc('saveTinkItems: '+work_id+' '+work_val);
       //var sid_erledigt='';
       //if (work_val.toString().substring(0,12)==this.erledigt_txt) { sid_erledigt=index; }
-      //this.restProvider.saveServiceBikeNR(this.nid,work_id,work_val,sid_erledigt)
-      this.restProvider.saveServiceBikeNR(this.nid,work_id,work_val,index) 
+      var sid='';
+      if ( work_id=='txt01' && work_val== this.erledigt_txt ) sid=index; 
+      if ( work_id=='txt01' && work_val!= '::new_task::' ) sid=index; 
+      this.restProvider.saveServiceBikeNR(this.nid,work_id,work_val,sid)
+      // this.restProvider.saveServiceBikeNR(this.nid,work_id,work_val,index) 
     .then(data => { 
       //this.currentItems=result;
       
-      //this.ionViewWillEnter();
-      if (index!=='' ) {
+      //this.ionViewWillEnter(); 
+      // frontend dieser Seite ändern
+      if (work_id=='smartlock_battery_charge') index='smartlock_battery_charge';
+      if (work_id=='bike_battery_charge') index='bike_battery_charge';
+      if (work_id=='txt01' && work_val== '::new_task::' )  index='::new_task::';
+        if (index!=='' ) {
         if (index=='def') {
           this.service_state='1';
           this.restProvider.ShowMessage('Rad defekt !');
           //this.zuletzt_gesehen='Rad defekt \n'+this.zuletzt_gesehen;
-        } else if (index=='smart_battery_charge') {
+        } else if (index=='smartlock_battery_charge') {
           this.smartlock_charge='100';
         } else if (index=='bike_battery_charge') {
           this.bike_charge='100';
@@ -305,14 +318,12 @@ protected adjustTextarea(event: any): void {
         } else if (index=='aufgabe') {
           this.todo_info='1';
           this.restProvider.ShowMessage('Aufgabe gespeichert !');
-          //this.zuletzt_gesehen='Aufgabe gespeichert \n'+this.zuletzt_gesehen;
-          this.aufgabe_api=this.aufgabe;
+          this.ionViewWillEnter();
         } else if (work_val.toString().substring(0,12)==this.erledigt_txt) {
           this.todo_info='0';
-          this.aufgabe='';this.aufgabe_api=this.erledigt_txt;
           this.restProvider.ShowMessage('Aufgabe erledigt !');
           this.ionViewWillEnter();
-        } else if (index=='::new_task::' )  {
+        } else if (index == '::new_task::' )  {
           this.todo_info='1';
           this.restProvider.ShowMessage('Neue Aufgabe !');
           this.ionViewWillEnter();

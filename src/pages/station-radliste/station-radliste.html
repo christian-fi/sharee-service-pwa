@@ -41,23 +41,23 @@
     -->
 
      <ion-label stacked >&nbsp;&nbsp;&nbsp;<ion-icon name="build" *ngIf="todo_info=='1'">&nbsp;</ion-icon>Aufgaben &nbsp;&nbsp;&nbsp;&nbsp;</ion-label>
-     <button  *ngIf="currentItemsAufgaben==''"  class="button-small-md" ion-button  outline on-click="saveStationService('txt01','::new_task::','::new_task::');"><ion-icon name="add-circle"></ion-icon>&nbsp;Neu</button>
+     <button  *ngIf="currentItemsAufgaben==''"  class="button-small-md" ion-button  outline on-click="saveStationService('txt01','::new_task::','');"><ion-icon name="add-circle"></ion-icon>&nbsp;Neue Aufgabe</button>
        
      <ion-list >
      <div *ngFor="let item of currentItemsAufgaben; let last = last; let i = index" id="aufgaben_div">
          <!--<form>-->
    <!--  <ion-textarea (keyup)="adjustTextarea($event);"  (focus)="adjustTextarea($event);"  placeholder="... hier eingeben" type="text"  rows="2" [(ngModel)]="item.work_val"></ion-textarea>          
-         -->      
-       <ion-textarea autosize [minRows]="1" [maxRows]="5"  placeholder="Neue Aufgabe ... hier eingeben"  [(ngModel)]="item.work_val"></ion-textarea>          
+         -->
+       <p> {{item.mtime.substr(8,2)+'.'+item.mtime.substr(5,2)+'.'+item.mtime.substr(2,2)+' '+item.mtime.substr(11,5)}} - {{item.user_name}}&nbsp;</p>        
+       <ion-textarea autosize rows=1 [maxRows]="5"  placeholder="Neue Aufgabe ... hier eingeben"  [(ngModel)]="item.work_val"></ion-textarea>          
          <!--</form>-->
        <button class="button-small-md" type=submit ion-button color="positive" on-click="saveStationService('txt01',item.work_val,item.service_id);" outline >Speichern</button>
        <button class="button-small-md" type=submit ion-button color="positive" on-click="saveStationService('txt01',erledigt_txt,item.service_id);" outline >Erledigt</button>  
-       <button  *ngIf="last"  class="button-small-md" ion-button on-click="saveStationService('txt01','::new_task::','::new_task::');" outline ><ion-icon name="add-circle"></ion-icon>&nbsp;Neu</button>
-       <ion-badge item-end="" color="white" class="note note-ios">Christian Fischer <br> 12.12.22 3:43</ion-badge>
        <!--<button class="button-small-md" type=submit ion-button color="positive" item-right on-click="saveRadService('txt01',erledigt_txt,sid_erledigt);">&nbsp;NEU</button>-->  
      <hr>
-     </div>
-     </ion-list>
+     <button  *ngIf="last"  class="button-small-md" ion-button on-click="saveStationService('txt01','::new_task::','');" outline ><ion-icon name="add-circle"></ion-icon>&nbsp;Neue Aufgabe</button>
+    </div>
+    </ion-list>
    
 
 
@@ -74,9 +74,9 @@
           <ion-note   class="note-md-dark">{{item.state}}</ion-note>
         </ion-badge>
      <!-- <ion-icon name="build" item-right *ngIf="item.service_state=='1' || item.service_state=='2' || (item.service_state=='0' && item.todo_info=='1')"></ion-icon>-->
-     <ion-badge  *ngIf="item.smartlock_type.battery.charge_current_percent != ''" id="kku-lock" color="miss" item-right class="akku_info">{{item.smartlock_type.battery.charge_current_percent}}</ion-badge>
-     <ion-badge *ngIf="item.smartlock_type.battery.charge_current_percent == ''" id="kku-lock" color="miss" item-right class="akku_info">0</ion-badge><ion-icon name="battery-charging" item-right style="font-size: 25px;"></ion-icon>
-     <ion-badge *ngIf="item.bike_type.battery != undefined"  id="akku-bike-info" color="danger" item-right class="akku_info">{{item.bike_type.battery.charge_current_percent}}</ion-badge>
+     <ion-badge  *ngIf="item.smartlock_type.battery.charge_current_percent != ''" id="kku-lock"  color="akku_smart" item-right class="akku_info">{{item.smartlock_type.battery.charge_current_percent}}</ion-badge>
+     <ion-badge *ngIf="item.smartlock_type.battery.charge_current_percent == ''" id="kku-lock"  color="akku_smart" item-right class="akku_info">0</ion-badge><ion-icon name="battery-charging" item-right style="font-size: 25px;"></ion-icon>
+     <ion-badge *ngIf="item.bike_type.battery != undefined"  id="akku-bike-info"  color="akku_bike" item-right class="akku_info">{{item.bike_type.battery.charge_current_percent}}</ion-badge>
         <ion-icon name="build" item-right *ngIf="item.todo_info=='1'"  style="font-size: 23px;padding:2px;"></ion-icon>
       <!-- *ngIf="item.service_state=='3'" -->
         <ion-icon  style="margin-left:3px;margin-right:0px;"  name="checkmark-circle"  item-right *ngIf="service_gesehen[item.bike]!='ja'" color="danger" on-click="saveRadServiceStation(item.bike,'int01',1)"></ion-icon>

@@ -74,6 +74,11 @@ function itc_sort_bike(b,a){
         if (b['mtime']==a['mtime']) return a['work_name'].localeCompare(b['work_name']); 
         return b['mtime'].localeCompare(a['mtime']); 
       } 
+      function itc_sort_zuerst(a,b){  
+        if (b['mtime']==a['mtime']) return b['work_name'].localeCompare(a['work_name']); 
+        return a['mtime'].localeCompare(b['mtime']); 
+      }
+
     if (result.length >0) {  // kein service daten ergebnis ?
       result.sort(itc_sort_zuletzt);
     
@@ -108,7 +113,7 @@ function itc_sort_bike(b,a){
       
     } 
       //this.aufgabe=decodeHTML(this.aufgabe); 
-      this.currentItemsAufgaben=result_aufgaben;
+      this.currentItemsAufgaben=result_aufgaben.sort(itc_sort_zuerst);
       if (this.currentItemsAufgaben!='') this.todo_info='1';
       this.restProvider.console_itc( this.currentItemsAufgaben);
       });
@@ -151,11 +156,14 @@ function itc_sort_bike(b,a){
 
   saveStationService(work_id:string,work_val:string,index:string) { 
   if (work_val!=='') { 
+    var sid='';
+    if ( index != "" ) sid=index; 
     this.restProvider.console_itc('saveStationItems: '+work_id+' '+work_val+' '+index);
-    this.restProvider.saveServiceStationNR(this.id,work_id,work_val,index) 
+    this.restProvider.saveServiceStationNR(this.id,work_id,work_val,sid) 
     .then(data => { 
       //this.currentItems=result;
-
+      if (work_id=='txt01' && work_val== '::new_task::' )  {index='::new_task::'; }
+      
       //this.ionViewWillEnter();
       if (index!=='' ) {
         if (work_val.toString().substring(0,12)==this.erledigt_txt) {
@@ -170,6 +178,7 @@ function itc_sort_bike(b,a){
         } else if (index > '100') {  // Aufagben mit index große zahl
           this.todo_info='1';
           this.restProvider.ShowMessage('Aufgabe gespeichert !');
+          this.ionViewWillEnter();
         } 
       }//this.restProvider.console_itc( this.currentItems);
       });

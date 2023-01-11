@@ -49,8 +49,12 @@ $colors: (
   T1:     #f53d3d,
   T2:      #32db64,
   T3:       #fab810,//#f7de4d, 
-  T4:  #488aff
+  T4:  #488aff,
+  
+  akku_smart: rgb(255, 145, 0),
+  akku_bike: rgb(177, 44, 44)
   );
+
 
   .toast-danger{     .toast-wrapper {     background-color: red !important;  }     }
 // akku

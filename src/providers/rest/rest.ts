@@ -104,10 +104,13 @@ rad_not_moved(sid:string){ let toast = this.toastCtrl.create({ message: 'Falsche
     
   saveServiceBikeNR(bike_id:string,work_id:string,work_val:string,extra_param:string) { 
   var aco:string ='&authcookie='+window.localStorage.getItem('authcookie'); 
-  var extra:string =''; 
-  if (work_val=='::new_task::' ) {  extra_param=''; }  // neue Aufgabe anlegen
-  else if (extra_param!=='' ) { extra='&service_id='+extra_param; }
-  return new Promise(resolve => {  
+  var extra=''; 
+  if (extra_param!=='' ) { extra='&service_id='+extra_param; }  // Service ids mussen nicht extra_param > '100' 
+  /*if (work_val=='::new_task::' ) {  extra_param=''; }  // neue Aufgabe anlegen
+  if (work_id=='smart_battery_charge' || work_id=='bike_battery_charge'  ) {  extra_param=''; }  
+  if (extra_param!=='' && extra_param > '100' ) { extra='&service_id='+extra_param; }  // Service ids mussen nicht extra_param > '100' 
+  */
+ return new Promise(resolve => {  
     //this.http.get(this.apiURL+this.SaveServiceBikeNR+bike_id+'&work_id='+work_id+'&work_val='+encodeURIComponent(work_val)+aco)
     if (work_val != '::new_task::') work_val=encodeURIComponent(work_val);  
     this.http.get(this.apiUrlOperator+this.SaveServiceBikeNR+bike_id+'&work_id='+work_id+'&work_val='+work_val+extra+aco)
@@ -130,9 +133,11 @@ rad_not_moved(sid:string){ let toast = this.toastCtrl.create({ message: 'Falsche
   //if (id.length==1) id='0'+id; 
   var station_id; station_id=id;//station_id=10+id;
   var aco:string ='&authcookie='+window.localStorage.getItem('authcookie'); 
-  var extra:string ='';
-  if (work_val=='::new_task::' ) {  extra_param=''; }  // neue Aufgabe anlegen
-  else if (extra_param!=='' ) { extra='&service_id='+extra_param; }
+  var extra='';
+  //if (work_val=='::new_task::' ) {  extra_param=''; }  // neue Aufgabe anlegen
+  //else if (extra_param!=='' ) { extra='&service_id='+extra_param; }
+  if (extra_param!=='' ) { extra='&service_id='+extra_param; }  // Service ids mussen nicht extra_param > '100' 
+  
   return new Promise(resolve => { 
     //this.http.get(this.apiURL+this.SaveServiceStationNR+station_id+'&work_id='+work_id+'&work_val='+encodeURIComponent(work_val)+aco)
     if (work_val != '::new_task::') work_val=encodeURIComponent(work_val);  

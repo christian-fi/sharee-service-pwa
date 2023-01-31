@@ -220,7 +220,8 @@ let ri=0; // items array leer dann fehler, daher erstmal nur 13 ausgeben
                // this.stations[key]['soll']=this.stations[key]['soll']-tink_soll;
              
              this.stations[key]['miss']=this.stations[key]['soll']-this.stations[key]['anzahl'];
- 
+             this.stations[key]['station_num']=this.stations[key]['station'].replace(/[^0-9]/g,'');
+
              this.stations_out.push(this.stations[key]);   
              window.localStorage.setItem('uri_operator',this.stations[key]['uri_operator']);
              
@@ -239,8 +240,11 @@ let ri=0; // items array leer dann fehler, daher erstmal nur 13 ausgeben
             if (a['station'] <= b['station']) { comparison = 1;}  else { comparison=-1;   }
             return comparison;
           } 
+
+          function num_sort_station(b,a){ return b['station_num'] - a['station_num'];       }  // numerical sort   
+
      
-    this.currentItems=this.stations_out.sort(itc_sort_station);
+    this.currentItems=this.stations_out.sort(num_sort_station);
     this.raederItems=result_raeder;
 //            this.currentItems=result_raeder;
 //            this.restProvider.console_itc( this.raederItems);            

@@ -39,6 +39,8 @@ export class RadServicePage {
   new_station_id: string;
   smartlock_charge: string;
   bike_charge: string;
+  smartlock_akku_farbe='';
+  bike_akku_farbe='';
   erledigt_txt='::erledigt::';
   //new_task_txt='::new_task::';
   @ViewChild('inputToFocus') inputToFocus;
@@ -107,6 +109,15 @@ protected adjustTextarea(event: any): void {
         else this.bike_charge='nd';
         //this.bike_charge=result[0]['bike_type']['battery']['charge_current_percent'];
 
+        this.bike_akku_farbe='bike_gelb'; 
+        if ( result[0]['bike_type']['battery'] !== undefined ) {
+          if ( result[0]['bike_type']['battery']['charge_current_percent'] > 70 ) this.bike_akku_farbe='bike_gruen'; 
+          if ( result[0]['bike_type']['battery']['charge_current_percent'] < 30 ) this.bike_akku_farbe='bike_rot'; 
+        }
+        this.smartlock_akku_farbe='smartlock_gelb';
+        if ( result[0]['smartlock_type']['battery']['charge_current_percent'] > 70 ) this.smartlock_akku_farbe='smartlock_gruen'; 
+        if ( result[0]['smartlock_type']['battery']['charge_current_percent'] < 30 ) this.smartlock_akku_farbe='smartlock_rot'; 
+        
         // set URI_OP
         window.localStorage.setItem('uri_operator',result[0]['uri_operator']);
         this.restProvider.apiUrlOperator=result[0]['uri_operator']+'/APIjsonserver?request=';
@@ -147,7 +158,7 @@ protected adjustTextarea(event: any): void {
     if (result.length >0) {  // kein service daten ergebnis ?
       result.sort(itc_sort_zuletzt);
       this.zuletzt_gesehen_am=result[0]['mtime'].substr(8,2)+'.'+result[0]['mtime'].substr(5,2)+'.'+result[0]['mtime'].substr(2,2)+' '+result[0]['mtime'].substr(11,5);
-      this.zuletzt_gesehen='von: '+result[0]['user_name']+' - letzter Service:'; //+result[0]['work_name'];
+      this.zuletzt_gesehen=result[0]['user_name']+', '+this.zuletzt_gesehen_am+' :'; //+result[0]['work_name'];
       
         let ra=0; let sp=' '; 
         for (var key in result) {

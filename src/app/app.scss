@@ -18,10 +18,18 @@
 .toolbar-background-md {     background: #0061a1; }
 .toolbar-title-md {  font-size: 1.8rem;}
 
-#akku-bike-info { padding:6px}
+#akku-bike-info { color:black; padding:5px; padding-top:10px;padding-left:0px;padding-right:0px; width:27px;}
+.akku_farbe-bike_rot, .akku_farbe-bike_gruen, .akku_farbe-bike_gelb { background-image: url("../assets/imgs/bike_akku.png");  background-position-x: center; background-position-y: top; background-repeat: no-repeat; }
+.akku_farbe-smartlock_rot, .akku_farbe-smartlock_gruen, .akku_farbe-smartlock_gelb { background-image: url("../assets/imgs/smartlock_akku.png");  background-position-x: center; background-position-y: top; background-repeat: no-repeat; }
+
+.akku_farbe-bike_rot,.akku_farbe-smartlock_rot { background-color: rgb(247, 89, 89)  }
+.akku_farbe-bike_gruen,.akku_farbe-smartlock_gruen { background-color: rgb(22, 187, 22);  }
+.akku_farbe-bike_gelb,.akku_farbe-smartlock_gelb { background-color: yellow;  }
+
 
 .button-md {    text-transform: none; }
 
+#aufgaben_div_top hr    {  margin-bottom: -8px; background-color:rgb(72, 138, 255) !important;    } 
 #aufgaben_div hr    {  margin-top: -5px; background-color:rgb(72, 138, 255) !important;    } 
 #aufgaben_div p    {  font-size: 13px; text-align: right; margin-top: -2px; margin-bottom:-8px; color: rgb(72, 138, 255);   } 
 #aufgaben_div .item.item-textarea { padding-left: 0px;  } 

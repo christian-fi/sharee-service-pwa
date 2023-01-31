@@ -42,18 +42,31 @@ export class StationRadlistePage {
         // check if the property/key is defined in the object itself, not in parent
         if (data.hasOwnProperty(key)) {
           //if (data[key]['state'] !=='occupied')  result.push(data[key]);            
-          result.push(data[key]);            
+          data[key]['bike_num']=data[key]['bike'].replace(/[^0-9]/g,''); 
+          data[key]['bike_akku_farbe']='bike_gelb'; 
+          if ( data[key]['bike_type']['battery'] !== undefined) {
+            if ( data[key]['bike_type']['battery']['charge_current_percent'] > 70 ) data[key]['bike_akku_farbe']='bike_gruen'; 
+            if ( data[key]['bike_type']['battery']['charge_current_percent'] < 30 ) data[key]['bike_akku_farbe']='bike_rot'; 
+          }
+          data[key]['smartlock_akku_farbe']='smartlock_gelb';
+          if ( data[key]['smartlock_type']['battery']['charge_current_percent'] > 70 ) data[key]['smartlock_akku_farbe']='smartlock_gruen'; 
+          if ( data[key]['smartlock_type']['battery']['charge_current_percent'] < 30 ) data[key]['smartlock_akku_farbe']='smartlock_rot'; 
+              
+          result.push(data[key]);       
           //  this.restProvider.console_itc( key, Array.of(data[key]));
         }
       } 
  
-function itc_sort_bike(b,a){
-  let comparison = 0;
-  if (a['bike'] <= b['bike']) { comparison = 1;}  else { comparison=-1;   }
-  return comparison;
-} 
-        this.currentItems=result.sort(itc_sort_bike); //result; // sorting stop - result.sort(itc_sort_bike);
-        //this.restProvider.console_itc( this.currentItems);
+      function itc_sort_bike(b,a){  // alphanum sort
+        let comparison = 0;
+        if (a['bike'] <= b['bike']) { comparison = 1;}  else { comparison=-1;   }
+        return comparison;
+      } 
+      function num_sort_bike(b,a){ return b['bike_num'] - a['bike_num'];       }  // numerical sort
+
+      this.currentItems=result.sort(num_sort_bike); //result; // sorting stop - result.sort(itc_sort_bike);
+        
+      //this.restProvider.console_itc( this.currentItems);
       });
   }
 

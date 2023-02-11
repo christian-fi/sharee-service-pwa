@@ -78,7 +78,7 @@
      <ion-badge *ngIf="item.smartlock_type.battery.charge_current_percent == ''"  [ngClass]="'akku_farbe-' + item.smartlock_akku_farbe" item-right  id="akku-bike-info" >0</ion-badge>
         <ion-icon name="build" item-right *ngIf="item.todo_info=='1'"  style="font-size: 23px;padding:2px;"></ion-icon>
       <!-- *ngIf="item.service_state=='3'" -->
-        <ion-icon  style="margin-left:3px;margin-right:0px;"  name="checkmark-circle"  item-right *ngIf="service_gesehen[item.bike]!='ja'" color="danger"></ion-icon>
+        <ion-icon  style="margin-left:3px;margin-right:0px;"  name="checkmark-circle"  item-right *ngIf="service_gesehen[item.bike]!='ja'" color="danger"  on-click="saveRadServiceStation(item.bike,'int01',1)"></ion-icon>
         <!-- on-click="saveRadServiceStation(item.bike,'int01',1)" -->
         <ion-icon  style="margin-right:0px;"  name="checkmark-circle"  item-right  *ngIf="service_gesehen[item.bike]=='ja'"color="secondary"></ion-icon>
       </ion-item>

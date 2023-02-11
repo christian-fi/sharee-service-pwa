@@ -123,7 +123,7 @@ rad_not_moved(sid:string){ let toast = this.toastCtrl.create({ message: 'Falsche
     resolve(data['shareejson'][bike_id]);
     }, err => {     this.keinNetz();       this.console_itc(err);           },
       ()=> {
-        this.console_itc('copi rad nr'+bike_id+' gespeichert '+this.apiUrlOperator+this.SaveServiceBikeNR+bike_id+'&work_id='+work_id+'&work_val='+encodeURIComponent(work_val)+extra+aco);
+        this.console_itc('copi rad nr '+bike_id+' gespeichert '+this.apiUrlOperator+this.SaveServiceBikeNR+bike_id+'&work_id='+work_id+'&work_val='+encodeURIComponent(work_val)+extra+aco);
       } 
       );
       });

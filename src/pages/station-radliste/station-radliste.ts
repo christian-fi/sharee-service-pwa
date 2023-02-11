@@ -228,12 +228,13 @@ export class StationRadlistePage {
     // work_id = 'int01'; update unsicher
     this.restProvider.console_itc('saveTinkItems: '+work_id+' '+work_val);
     this.service_gesehen[bike_nr]="ja";
+    this.restProvider.ShowMessage('Rad '+bike_nr+' gesehen - Reifen, Bremse, Lampe !');
     this.restProvider.saveServiceBikeNR(bike_nr,work_id,work_val,'') 
     .then(data => { 
       //this.currentItems=result;
       this.ionViewWillEnter();
       //this.restProvider.console_itc( this.currentItems);
       });
-  }
+    }
 
 }
